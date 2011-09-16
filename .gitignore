@@ -1,0 +1,5 @@
+#ignore les fichier temporaire généré par linux
+*.*~
+*~
+#ignore ceux généré par emacs
+\#*\#
