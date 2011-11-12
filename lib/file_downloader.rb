@@ -1,15 +1,20 @@
 require 'exception_raiser'
-require 'curb'
+require 'uri'
 
 
-class FileDownloader
+class DownloadManager
 
   USER_AGENT = "Mozilla/5.0 (X11; Linux i686; rv:2.0b10)"
 
-  def initialize()
+  attr_reader :uri
+
+  def initialize(uri_str)
+    @uri = URI(uri_str)
   end
 
-  def download(str_link, output_name)
+  def download(output_name)
   end
 
+  def is_srt?(http_req_response)
+  end
 end
