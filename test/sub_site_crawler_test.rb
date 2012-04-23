@@ -7,8 +7,64 @@ require 'nokogiri'
 
 include Nokogiri
 include Subito
+
+
+
+class TestSubSiteCrawler_Search < Test::Unit::TestCase
+  def setup
+    @crawl = SubSiteCrawler.new
+#    @crawl.connect
+  end
+
+
+  def test_search_must_return_nil_if_theres_no_result
+    FakeWeb.register_uri (:get, 
+                          "http://www.addic7ed.com",
+                          :body =>  "<form><div><b>0 results found</b></div></form>",
+                          :content_type => "text/html")
+    @crawl.connect
+    assert_equal nil, @crawl.search('foobar 01x02')
+  end
+  
+
+  def test_search_must_return_a_mechanize_page_link_if_results_found
+    FakeWeb.register_uri (:get, 
+                          "http://www.addic7ed.com",
+                          :body =>  "<form>
+                                       <div><b>1 results found</b></div>
+                                    </form>
+                                    <table>
+                                     <tr><td><a debug='22' href='serie/foobar/1/2/title'>Foobar - 01x02 - Title</a></td>
+                                     </tr>
+                                    </table>",
+                          :content_type => "text/html")
+    @crawl.connect
+    assert_equal Mechanize::Page::Link, @crawl.search('foobar 01x02').class
+  end
+
+  def test_search_must_return_the_right_link_if_results_found
+    FakeWeb.register_uri (:get, 
+                          "http://www.addic7ed.com",
+                          :body =>  "<form>
+                                       <div><b>1 results found</b></div>
+                                    </form>
+                                    <table>
+                                     <tr><td><a debug='22' href='serie/foobar/1/2/title'>Foobar - 01x02 - Title</a></td>
+                                     </tr>
+                                     <tr><td><a debug='22' href='serie/Awesome_foobar/1/2/title'>Awesome Foobar - 01x02 - Title</a></td>
+                                     </tr>
+                                    </table>",
+                          :content_type => "text/html")
+    @crawl.connect
+    assert_not_nil   @crawl.search('foobar 01x02').text[/^Foobar - 01x02/]
+  end
+
+  def teardown
+  end
+end
+
+
 class TestSubSiteCrawler< Test::Unit::TestCase
-ADDICTED = "http://www.addic7ed.com"
   def setup
     @crawl= SubSiteCrawler.new
     @page = File.open('./ressource/page.html','r') do |f|
