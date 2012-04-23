@@ -3,6 +3,7 @@ $:.unshift File.join(File.dirname(__FILE__), '..', 'lib')
 require 'test/unit'
 require 'get_tv_show_feature'
 
+include Subito
 include TVShowFeature
 class TestGetTVShowName < Test::Unit::TestCase
   def test_must_return_an_hash_with_all_show_features
