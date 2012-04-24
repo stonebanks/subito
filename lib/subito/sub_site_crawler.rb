@@ -1,27 +1,40 @@
 require 'mechanize'
 
-SubSiteName = "http://www.addic7ed.com"
+SUBSITENAME = "http://www.addic7ed.com"
 
 module Subito
 
-  class SubSiteCrawler
-    def initialize
-      @agent = Mechanize.new
-      
-    end
+  # class SubSiteCrawler
+  #   def initialize(agent = Mechanize.new)
+  #     @agent = agent
+  #   end
     
-    def connect
-      @page = @agent.get SubSiteName
+  #   def connect
+  #     @page = @agent.get SUBSITENAME
   
-    end
+  #   end
 
-    def search(str)
-      hash = TVShowFeature::parse_show(str)
-      get_results( hash[:name])
-    end
+  #   def search(str)
+  #     hash = TVShowFeature::parse_show(str)
+  #     get_results( hash[:name])
+  #   end
+  # end
+  WebSiteNotReachableError = Class.new Mechanize::Error
 
-    
+  class SubSiteCrawlerConnector
+    def initialize(agent = Mechanize.new)
+      @agent = agent
+    end
+    def run
+      begin
+        @agent.get SUBSITENAME
+      rescue Mechanize::Error
+        raise WebSiteNotReachableError
+      end
+    end
   end
+  
+  
 end
 # module SubIto
 #   class InfoDL
@@ -47,7 +60,7 @@ end
 
 #     #connect to addicted webpage and search the show
 #     def connect_to_page(hash_tv_show_feature)
-      
+
 #       name,season,episode = hash_tv_show_feature[:name], hash_tv_show_feature[:season], hash_tv_show_feature[:episode]
 #       begin
 #         results = nil
@@ -88,9 +101,9 @@ end
 
 
 #   def find_show(hash_tv_show_feature)
-    
+
 #   end
-  
+
 #   module SubSiteCrawlerImpl
 #     extend self
 #     def get_version(doc, xpath_str)
