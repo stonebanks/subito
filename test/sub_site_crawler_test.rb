@@ -1,7 +1,8 @@
 $:.unshift File.join(File.dirname(__FILE__), '..', 'lib')
 
 require 'test/unit'
-require 'sub_site_crawler'
+require 'flexmock/testunit'
+require 'subito/sub_site_crawler'
 require 'fakeweb'
 require 'nokogiri'
 
@@ -11,19 +12,28 @@ include Subito
 
 
 class TestSubSiteCrawler_Search < Test::Unit::TestCase
+  include Flexmock::TestCase
   def setup
     @crawl = SubSiteCrawler.new
+    flexmock(TVShowFeature).should_receive(:parse_show).
+      with("foobar.102.xvid-toto.avi").
+      and_return({ :name    => "foobar", 
+                   :season  => "01", 
+                   :episode => "02"
+                   :acquisition =>"xvid",
+                   :team => "toto"
+                   :is720p => false})
 #    @crawl.connect
   end
 
 
   def test_search_must_return_nil_if_theres_no_result
     FakeWeb.register_uri (:get, 
-                          "http://www.addic7ed.com",
+                          %r(http://www.addic7ed\.com),
                           :body =>  "<form><div><b>0 results found</b></div></form>",
                           :content_type => "text/html")
     @crawl.connect
-    assert_equal nil, @crawl.search('foobar 01x02')
+    assert_equal nil, @crawl.search("foobar.102.xvid-toto.avi")
   end
   
 
