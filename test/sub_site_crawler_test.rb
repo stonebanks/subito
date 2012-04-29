@@ -18,7 +18,7 @@ class TestSubSiteCrawlerConnector < Test::Unit::TestCase
                          :body => "Nothing to be found 'round here",
                          :status => ["404", "Not Found"])
     assert_raises WebSiteNotReachableError do
-      @connector.run
+      @connector.connect
     end
   end
 
@@ -26,10 +26,18 @@ class TestSubSiteCrawlerConnector < Test::Unit::TestCase
     FakeWeb.register_uri(:get, %r(http://.*),
                           :body =>  "<form><div><b>0 results found</b></div></form>",
                           :content_type => "text/html")
-    assert_equal Mechanize::Page, @connector.run.class
+    assert_equal Mechanize::Page, @connector.connect.class
   end
 end
 
+# class TestSubSiteCrawlerSearcher < Test::Unit::TestCase
+#   def setup
+#     @searcher = SubSiteCrawlerSearcher.new(tvshowfeature, page)
+#   end
+#   def test_seacher_should_search_for_the_show_mention_by_TVshowfeature_object
+    
+#   end
+# end
 # class TestSubSiteCrawler_Search < Test::Unit::TestCase
 #   include Flexmock::TestCase
 #   def setup
