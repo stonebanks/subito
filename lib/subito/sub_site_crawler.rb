@@ -1,4 +1,5 @@
 require 'mechanize'
+require 'singleton'
 
 SUBSITENAME = "http://www.addic7ed.com"
 
@@ -20,21 +21,47 @@ module Subito
   #   end
   # end
   WebSiteNotReachableError = Class.new Mechanize::Error
+  
+  class Browser
+    include Singleton
+
+    attr_reader :agent
+    def initialize
+      @agent = Mechanize.new
+    end
+  end
+
 
   class SubSiteCrawlerConnector
-    def initialize(agent = Mechanize.new)
-      @agent = agent
-    end
-    def run
+    # def initialize #(browser = Browser.instance)
+    #   @agent = agent
+    # end
+    def connect
       begin
-        @agent.get SUBSITENAME
+        agent = Browser.instance.agent
+        agent.get SUBSITENAME
       rescue Mechanize::Error
         raise WebSiteNotReachableError
       end
     end
+
+    def search(tv_show_feature)
+      #on va se se servir de TVShowFeature
+    end
   end
   
+
+  class SubSiteCrawlerSearcher
+    
+  end
   
+  class SubSiteCrawler
+    def initialize(connector = SubSiteCrawlerConnector.new)
+      @connector = connector
+      @connector.connect
+    end
+    
+  end
 end
 # module SubIto
 #   class InfoDL
