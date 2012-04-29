@@ -45,8 +45,9 @@ module Subito
       end
     end
 
-    def search(tv_show_feature)
+    def search(string)
       #on va se se servir de TVShowFeature
+      
     end
   end
   

@@ -1,7 +1,7 @@
 $:.unshift File.join(File.dirname(__FILE__), '..', 'lib')
 
 require 'test/unit'
-#require 'flexmock/testunit'
+require 'flexmock/testunit'
 require 'subito/sub_site_crawler'
 require 'fakeweb'
 require 'nokogiri'
@@ -27,6 +27,12 @@ class TestSubSiteCrawlerConnector < Test::Unit::TestCase
                           :body =>  "<form><div><b>0 results found</b></div></form>",
                           :content_type => "text/html")
     assert_equal Mechanize::Page, @connector.connect.class
+  end
+
+
+  def test_must_be_able_to_find_the_right_tv_show_page 
+    #config.should_receive(:search_url =>
+    assert_equal "http://www.addic7ed.com/search.php?search=foobar+1x03&Submit=Search", @connector.search("foobar s01e03")
   end
 end
 
