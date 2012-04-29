@@ -1,0 +1,3 @@
+ressources:
+ subsite_name: "http://www.addic7ed.com/"
+ searching_url: "search.php?search=<%= name%>+<%= season%>x<%= episode%>&Submit=Search"
