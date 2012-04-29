@@ -1,7 +1,11 @@
 require 'mechanize'
 require 'singleton'
+require 'subito/config'
 
-SUBSITENAME = "http://www.addic7ed.com"
+# SUBSITENAME = "http://www.addic7ed.com"
+# Search_url = ERB <<-EOF
+# http://www.addic7ed.com/search.php?search=<%= name%>+<%= season%>x<%= episode%>&Submit=Search
+# EOF
 
 module Subito
 
@@ -39,13 +43,15 @@ module Subito
     def connect
       begin
         agent = Browser.instance.agent
-        agent.get SUBSITENAME
+        agent.get Config.instance.subsite_name
       rescue Mechanize::Error
         raise WebSiteNotReachableError
       end
     end
 
-    def search(string)
+    def search(tv_show_feature)
+      erb = ERB.new Config.instance.searching_url
+      name = tv_show_feature.name
       #on va se se servir de TVShowFeature
       
     end
