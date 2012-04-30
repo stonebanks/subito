@@ -40,10 +40,10 @@ module Subito
     # def initialize #(browser = Browser.instance)
     #   @agent = agent
     # end
-    def connect
+    def connect(url = "")
       begin
         agent = Browser.instance.agent
-        agent.get Config.instance.subsite_name
+        agent.get (Config.instance.subsite_name+url)
       rescue Mechanize::Error
         raise WebSiteNotReachableError
       end
@@ -52,8 +52,9 @@ module Subito
     def search(tv_show_feature)
       erb = ERB.new Config.instance.searching_url
       name = tv_show_feature.name
-      #on va se se servir de TVShowFeature
-      
+      season = tv_show_feature.season
+      episode = tv_show_feature.episode
+      connect erb.result(binding)
     end
   end
   

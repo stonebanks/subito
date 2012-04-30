@@ -1,7 +1,7 @@
 $:.unshift File.join(File.dirname(__FILE__), '..', 'lib')
 
 require 'test/unit'
-require 'flexmock'
+require 'flexmock/test_unit'
 require 'subito/sub_site_crawler'
 require 'fakeweb'
 require 'nokogiri'
@@ -32,10 +32,14 @@ class TestSubSiteCrawlerConnector < Test::Unit::TestCase
 
 
   def test_must_be_able_to_find_the_right_tv_show_page 
+    FakeWeb.register_uri(:get, 
+                         "http://www.addic7ed.com/search.php?search=foobar+1x03&Submit=Search",
+                         :body =>  "Hello World!", :content_type => "text/html")
+
     #config.should_receive(:search_url =>
     tv_show_feature = flexmock("TVShowFeature")
     tv_show_feature.should_receive(:name=>"foobar", :season => "01", :episode =>"03")
-    assert_equal "http://www.addic7ed.com/search.php?search=foobar+1x03&Submit=Search", @connector.search(tv_show_feature)
+    assert_equal "Hello World!", @connector.search(tv_show_feature).body
   end
 end
 
