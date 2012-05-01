@@ -2,33 +2,11 @@ require 'mechanize'
 require 'singleton'
 require 'subito/config'
 
-# SUBSITENAME = "http://www.addic7ed.com"
-# Search_url = ERB <<-EOF
-# http://www.addic7ed.com/search.php?search=<%= name%>+<%= season%>x<%= episode%>&Submit=Search
-# EOF
-
 module Subito
-
-  # class SubSiteCrawler
-  #   def initialize(agent = Mechanize.new)
-  #     @agent = agent
-  #   end
-    
-  #   def connect
-  #     @page = @agent.get SUBSITENAME
-  
-  #   end
-
-  #   def search(str)
-  #     hash = TVShowFeature::parse_show(str)
-  #     get_results( hash[:name])
-  #   end
-  # end
   WebSiteNotReachableError = Class.new Mechanize::Error
   
   class Browser
     include Singleton
-
     attr_reader :agent
     def initialize
       @agent = Mechanize.new
@@ -37,9 +15,6 @@ module Subito
 
 
   class SubSiteCrawlerConnector
-    # def initialize #(browser = Browser.instance)
-    #   @agent = agent
-    # end
     def connect(url = "")
       begin
         agent = Browser.instance.agent
@@ -57,19 +32,7 @@ module Subito
       connect erb.result(binding)
     end
   end
-  
 
-  class SubSiteCrawlerSearcher
-    
-  end
-  
-  class SubSiteCrawler
-    def initialize(connector = SubSiteCrawlerConnector.new)
-      @connector = connector
-      @connector.connect
-    end
-    
-  end
 end
 # module SubIto
 #   class InfoDL

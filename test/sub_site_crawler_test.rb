@@ -4,9 +4,7 @@ require 'test/unit'
 require 'flexmock/test_unit'
 require 'subito/sub_site_crawler'
 require 'fakeweb'
-require 'nokogiri'
 
-include Nokogiri
 include Subito
 
 class TestSubSiteCrawlerConnector < Test::Unit::TestCase
@@ -26,7 +24,7 @@ class TestSubSiteCrawlerConnector < Test::Unit::TestCase
     FakeWeb.register_uri(:get, %r(http://.*),
                           :body =>  "<form><div><b>0 results found</b></div></form>",
                           :content_type => "text/html")
-    assert_equal Mechanize::Page, @connector.connect.class
+    assert_instance_of Mechanize::Page, @connector.connect
   end
 
 
