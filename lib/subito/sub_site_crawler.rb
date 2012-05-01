@@ -1,19 +1,9 @@
-require 'mechanize'
-require 'singleton'
 require 'subito/config'
+require 'subito/browser'
 
 module Subito
   WebSiteNotReachableError = Class.new Mechanize::Error
-  
-  class Browser
-    include Singleton
-    attr_reader :agent
-    def initialize
-      @agent = Mechanize.new
-    end
-  end
-
-
+ 
   class SubSiteCrawlerConnector
     def connect(url = "")
       begin
