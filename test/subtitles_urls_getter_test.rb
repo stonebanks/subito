@@ -8,8 +8,19 @@ require 'fakeweb'
 include Subito
 
 class TestSubtitlesUrlsGetter < Test::Unit::TestCase
-  def test_must_return_an_hash
-    
+
+  def setup
+    @subs = SubtitlesUrlsGetter.new
+  end
+  
+  def test_must_return_an_hash_formatted_with_version_language_and_urls
+    assert_equal(
+                 {"fqm" =>
+                   { "english" => ['/original/1122' , 
+                                   '/original/2211'
+                                  ]
+                   }
+                 }, @subs.run)
   end
 
   
