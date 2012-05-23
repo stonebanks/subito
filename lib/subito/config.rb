@@ -1,3 +1,4 @@
+$:.unshift File.join(File.dirname(__FILE__), '..')
 require 'erb'
 require 'yaml'
 require 'singleton'
@@ -8,15 +9,17 @@ module Subito
     attr_reader :data
     def initialize
       @data = YAML::load_file(File.join(File.dirname(__FILE__),'..', 'config.yml'))
-      define_methods(data['ressources'].keys)
+      data.keys.each do |key|
+        define_methods(key, data[key].keys)
+      end
     end
 
 
-    def define_methods(names)
+    def define_methods(prefix_name, names)
       names.each do |name|
         self.class.class_eval <<-EOS
-         def #{name}
-           data['ressources']["#{name}"]
+         def #{prefix_name}_#{name}
+           data["#{prefix_name}"]["#{name}"]
          end
         EOS
       end

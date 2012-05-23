@@ -8,11 +8,10 @@ require 'subito/config'
 class TestConfig < Test::Unit::TestCase
   include Subito
 
-  def test_subsite_name_method_is_defined
-    assert Config.instance.respond_to? :subsite_name
+  def test_method_are_defined
+    assert [:ressources_subsite_name, 
+            :xpaths_sections,
+            :language_fr].all? do |a| Config.instance.respond_to? a end
   end
 
-  def test_method_searching_url_method_is_defined
-    assert Config.instance.respond_to? :searching_url
-  end
 end
