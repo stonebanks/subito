@@ -1,3 +1,28 @@
 ressources:
  subsite_name: "http://www.addic7ed.com/"
- searching_url: "search.php?search=<%= name%>+<%= '%01d'%season%>x<%= episode%>&Submit=Search"
+ ##searching_url: "search.php?search=<%= name%>+<%= '%01d'%season%>x<%= episode%>&Submit=Search"
+ searching_url: "re_episode.php?ep=<%= show_id%>-<%= season%>x<%= episode%>"
+#subtitle_url_getter
+xpaths:
+ sections: "//div[@id='container95m']//table[@class='tabel95' and @width]"
+ 
+language:
+ en: "English"   
+ fr: "French" 
+ it: "Italian" 
+ es: "Spanish"
+ pt_br: "Portuguese (Brazilian)" 
+ pt: "Portuguese"
+ ro: "Romanian" 
+ el: "Greek"
+ ar: "Arabic" 
+ de: "German"
+ hr: "Croatian"
+ id: "Indonesian" 
+ he: "Hebrew" 
+ r: "Russian"
+ tr: "Turkish" 
+ se: "Swedish" 
+ cs: "Czech" 
+ nl: "Dutch"
+ h: "Hungarian" 

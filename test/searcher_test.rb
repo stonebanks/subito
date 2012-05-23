@@ -2,14 +2,14 @@ $:.unshift File.join(File.dirname(__FILE__), '..', 'lib')
 
 require 'test/unit'
 require 'flexmock/test_unit'
-require 'subito/sub_site_crawler'
+require 'subito/searcher'
 require 'fakeweb'
 
 include Subito
 
-class TestSubSiteCrawlerConnector < Test::Unit::TestCase
+class TestSearcher < Test::Unit::TestCase
   def setup
-    @connector = SubSiteCrawlerConnector.new
+    @connector = Searcher.new
   end
   def test_must_raise_an_error_if_connection_cant_be_made
     FakeWeb.register_uri(:get, %r(http://.*), 
@@ -31,12 +31,12 @@ class TestSubSiteCrawlerConnector < Test::Unit::TestCase
 
   def test_must_be_able_to_find_the_right_tv_show_page 
     FakeWeb.register_uri(:get, 
-                         "http://www.addic7ed.com/search.php?search=foobar+1x03&Submit=Search",
+                         "http://www.addic7ed.com/re_episode.php?ep=1234-01x03",
                          :body =>  "Hello World!", :content_type => "text/html")
 
     #config.should_receive(:search_url =>
     tv_show_feature = flexmock("TVShowFeature")
-    tv_show_feature.should_receive(:name=>"foobar", :season => "01", :episode =>"03")
+    tv_show_feature.should_receive(:show_id=>"1234", :season => "01", :episode =>"03")
     assert_equal "Hello World!", @connector.search(tv_show_feature).body
   end
 end

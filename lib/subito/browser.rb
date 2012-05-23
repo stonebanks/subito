@@ -1,5 +1,6 @@
 require 'mechanize'
 require 'singleton'
+require 'subito/exception'
 
 
 module Subito
@@ -10,6 +11,16 @@ module Subito
     def initialize
       @agent = Mechanize.new
     end
-  end
 
+    def get(url)
+      begin
+        ret = @agent.get (url) 
+        yield(ret) if block_given?
+        ret
+      rescue Mechanize::Error
+        raise WebSiteNotReachableError
+      end
+    end
+  end
 end
+

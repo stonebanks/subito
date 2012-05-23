@@ -1,22 +1,17 @@
+$:.unshift File.join(File.dirname(__FILE__), '..')
 require 'subito/config'
 require 'subito/browser'
 
 module Subito
-  WebSiteNotReachableError = Class.new Mechanize::Error
- 
-  class SubSiteCrawlerConnector
+   
+  class Searcher
     def connect(url = "")
-      begin
-        agent = Browser.instance.agent
-        agent.get (Config.instance.subsite_name+url)
-      rescue Mechanize::Error
-        raise WebSiteNotReachableError
-      end
+        Browser.instance.get (Config.instance.ressources_subsite_name+url)
     end
 
     def search(tv_show_feature)
-      erb = ERB.new Config.instance.searching_url
-      name = tv_show_feature.name
+      erb = ERB.new Config.instance.ressources_searching_url
+      show_id = tv_show_feature.show_id
       season = tv_show_feature.season
       episode = tv_show_feature.episode
       connect erb.result(binding)
