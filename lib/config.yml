@@ -26,3 +26,7 @@ language:
  cs: "Czech" 
  nl: "Dutch"
  h: "Hungarian" 
+
+yaml_database:
+ data_xpath: "//select[@id='qsShow']//option"
+# directory: ""
