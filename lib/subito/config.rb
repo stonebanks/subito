@@ -9,17 +9,18 @@ module Subito
     attr_reader :data
     def initialize
       @data = YAML::load_file(File.join(File.dirname(__FILE__),'..', 'config.yml'))
-      data.keys.each do |key|
-        define_methods(key, data[key].keys)
+      self.data.keys.each do |key|
+        define_methods(key, self.data[key].keys)
       end
     end
 
 
     def define_methods(prefix_name, names)
       names.each do |name|
+        function = prefix_name+"_"+name
         self.class.class_eval <<-EOS
-         def #{prefix_name}_#{name}
-           data["#{prefix_name}"]["#{name}"]
+         def #{function}
+           self.data["#{prefix_name}"]["#{name}"]
          end
         EOS
       end
