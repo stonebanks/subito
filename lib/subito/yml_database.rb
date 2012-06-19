@@ -18,8 +18,8 @@ module Subito
     end
 
     def write
-      page = Browser.instance.get Config.instance.ressources_subsite_name
-      nodeset = page.parser.xpath Config.instance.yaml_database_data_xpath
+      page = Browser.instance.get SConfig.instance.ressources_subsite_name
+      nodeset = page.parser.xpath SConfig.instance.yaml_database_data_xpath
       nodeset.each do |node|
         @hash[node.text] = node.attr('value')
       end
@@ -30,6 +30,7 @@ module Subito
       end
      end
 
+    #return the id of the show name
     def get(name)
       if self.hash.empty?
         absolute_filename = File.join(Dir.home, self.filename)

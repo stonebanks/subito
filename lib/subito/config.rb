@@ -4,7 +4,7 @@ require 'yaml'
 require 'singleton'
 
 module Subito
-  class Config
+  class SConfig
     include Singleton
     attr_reader :data
     def initialize

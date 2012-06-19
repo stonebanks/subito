@@ -3,17 +3,20 @@ $:.unshift File.join(File.dirname(__FILE__), '..', 'lib')
 require 'test/unit'
 require 'flexmock'
 require 'subito/showfeature'
+require 'flexmock/test_unit'
 
 include Subito
 
-class TestShowFeature < Test::Unit::TestCase
+class ShowFeatureTest < Test::Unit::TestCase
+  include FlexMock::TestCase
   def setup
-    @showfeature = ShowFeature.new
+    flexmock(YamlDatabase).new_instances(:instance).should_receive(:get).with(String).and_return("42")
     t = ([('a'..'z'),(0..9)].map{|i| i.to_a}).flatten
     r=  (t<<['(',')','.']).flatten
     @name = (0..30).map{r.sample}.join
     @team = (0..4).map {t.sample}.join
     @show = @name+"."+ ["s01e03", '103', '01x03', '1x03'].sample + ".hdtv-"+@team+".avi"
+    @showfeature = ShowFeature.new
     @showfeature.parse_show @show
   end 
 

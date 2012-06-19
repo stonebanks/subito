@@ -15,8 +15,7 @@ class DownloadManagerTest < Test::Unit::TestCase
                     "lol" => { "english" => '/original/1223/0' }}
     @tv_show_feature = flexmock("TVShowFeature")
     @downloader = Downloader.new(hash_urls, @tv_show_feature)
-    flexmock(Config).should_receive("instance.ressources_subsite_name").
-      and_return("http://toto.com")
+    flexmock(SConfig).new_instances(:instance).should_receive(:ressources_subsite_name).and_return("http://toto.com")
   end
   def test_should_retrieve_url_for_the_right_team_and_language
     @tv_show_feature.should_receive(:team =>"lol")

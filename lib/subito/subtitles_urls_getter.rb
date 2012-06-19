@@ -15,7 +15,7 @@ module Subito
     end
 
 
-    def run(xpath_sections = Config.instance.xpaths_sections)
+    def run(xpath_sections = SConfig.instance.xpaths_sections)
       sections = @page.parser.xpath(xpath_sections)
       sections.each do |node|
         document = Nokogiri::XML::Document.new

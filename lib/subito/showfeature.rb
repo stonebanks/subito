@@ -1,4 +1,5 @@
 $:.unshift File.join(File.dirname(__FILE__), '..')
+require 'subito/yml_database'
 module Subito
 
   class ShowFeature
@@ -11,9 +12,11 @@ module Subito
       @season = str[PATTERN,2].nil? ? nil : "%02d" % str[PATTERN,2][/(\d+).?(\d{2}$)/,1]
       @episode = str[PATTERN,2].nil? ? nil : "%02d" % str[PATTERN,2][/(\d+).?(\d{2}$)/,2]
       @team = str[PATTERN,3].nil? ? nil : str[PATTERN,3].downcase
+      @id = get_id(@name)
     end
 
-    def get_id
+    def get_id(name)
+      YamlDatabase.instance.get(name)
     end
   end
 end

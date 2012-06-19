@@ -1,5 +1,5 @@
 $:.unshift File.join(File.dirname(__FILE__), '..')
-#require 'subito/config'
+require 'subito/config'
 require 'subito/browser'
 
 module Subito
@@ -13,7 +13,7 @@ module Subito
     def retrieve_url_for(language)
       nil
       team = tv_show_feature.team
-      url = Config.instance.ressources_subsite_name + hash[team][language] if 
+      url = SConfig.instance.ressources_subsite_name + hash[team][language] if 
         hash.has_key? team and hash[team].has_key? language
     end
 
