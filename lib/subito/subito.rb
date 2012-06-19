@@ -12,7 +12,7 @@ module Subito
         :name => "*.{avi,mp4,mkv}", 
         :to_rename => true }
 
-      languages = Config.instance.data["language"]
+      languages = SConfig.instance.data["language"]
 
       opts = OptionParser.new do |opts|
         opts.banner = "Usage: subito [options] "
