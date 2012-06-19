@@ -5,7 +5,7 @@ require 'flexmock'
 require 'subito/config'
 
 
-class TestConfig < Test::Unit::TestCase
+class TestSConfig < Test::Unit::TestCase
   include Subito
   [:ressources_subsite_name, 
    :ressources_searching_url,
@@ -14,19 +14,19 @@ class TestConfig < Test::Unit::TestCase
    :language_h,
    :language_cs,
    :yaml_database_data_xpath].each do |method|
-    TestConfig.class_eval  <<-EOS
+    TestSConfig.class_eval  <<-EOS
         def test_method_#{method}_is_defined?
-          assert(Config.instance.respond_to? :#{method}, "method undefined")
+          assert(SConfig.instance.respond_to? :#{method}, "method undefined")
         end
         EOS
    end
 
     def test_method_otoguhtguthgut_is_undefined
-      assert_equal false, Config.instance.respond_to?(:otoguhtguthgut)
+      assert_equal false, SConfig.instance.respond_to?(:otoguhtguthgut)
     end
 
     def test_method_must_return_string
-      assert_equal String, Config.instance.yaml_database_data_xpath.class
+      assert_equal String, SConfig.instance.yaml_database_data_xpath.class
     end
 end
 

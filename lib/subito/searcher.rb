@@ -6,11 +6,11 @@ module Subito
    
   class Searcher
     def connect(url = "")
-        Browser.instance.get (Config.instance.ressources_subsite_name+url)
+        Browser.instance.get (SConfig.instance.ressources_subsite_name+url)
     end
 
     def search(tv_show_feature)
-      erb = ERB.new Config.instance.ressources_searching_url
+      erb = ERB.new SConfig.instance.ressources_searching_url
       show_id = tv_show_feature.show_id
       season = tv_show_feature.season
       episode = tv_show_feature.episode
