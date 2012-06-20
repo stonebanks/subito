@@ -15,7 +15,7 @@ class ShowFeatureTest < Test::Unit::TestCase
     r=  (t<<['(',')','.']).flatten
     @name = (0..30).map{r.sample}.join
     @team = (0..4).map {t.sample}.join
-    @show = @name+"."+ ["s01e03", '103', '01x03', '1x03'].sample + ".hdtv-"+@team+".avi"
+    @show = @name+"."+ ["s01e09", '109', '01x09', '1x09'].sample + ".hdtv-"+@team+".avi"
     @showfeature = ShowFeature.new
     @showfeature.parse_show @show
   end 
@@ -25,7 +25,7 @@ class ShowFeatureTest < Test::Unit::TestCase
   end
 
   def test_should_return_the_episode_of_the_show
-    assert_equal "03",@showfeature.episode
+    assert_equal "09",@showfeature.episode
   end
   def test_should_return_the_season_of_the_show
     assert_equal "01", @showfeature.season

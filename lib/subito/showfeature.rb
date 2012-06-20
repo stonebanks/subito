@@ -9,14 +9,18 @@ module Subito
     def parse_show(str)
       raw_name = str
       @name = str[PATTERN, 1].nil? ? nil : str[PATTERN, 1].downcase.tr_s('.',' ')
-      @season = str[PATTERN,2].nil? ? nil : "%02d" % str[PATTERN,2][/(\d+).?(\d{2}$)/,1]
-      @episode = str[PATTERN,2].nil? ? nil : "%02d" % str[PATTERN,2][/(\d+).?(\d{2}$)/,2]
+      @season = str[PATTERN,2].nil? ? nil : "%02d" % str[PATTERN,2][/(\d+).?(\d{2}$)/,1].to_i
+      @episode = str[PATTERN,2].nil? ? nil : "%02d" % str[PATTERN,2][/(\d+).?(\d{2}$)/,2].to_i
       @team = str[PATTERN,3].nil? ? nil : str[PATTERN,3].downcase
       @id = get_id(@name)
     end
 
     def get_id(name)
       YamlDatabase.instance.get(name)
+    end
+
+    def to_s
+      "name : #{name} season: #{season} episode: #{episode} team: #{team} id: #{id}"
     end
   end
 end
