@@ -11,17 +11,18 @@ module Subito
   class YamlDatabase
     include Singleton
     attr_reader :filename
-    attr_writer :hash
+    attr_accessor :hash
     def initialize(filename = '.subito.store')
       @filename = filename
       @hash = {}
     end
 
     def write
+      puts "Creating database..."
       page = Browser.instance.get SConfig.instance.ressources_subsite_name
       nodeset = page.parser.xpath SConfig.instance.yaml_database_data_xpath
       nodeset.each do |node|
-        @hash[node.text] = node.attr('value')
+        @hash[node.text.downcase] = node.attr('value')
       end
       Dir.chdir Dir.home do 
         File.open(self.filename, 'w') do |out|
@@ -30,10 +31,10 @@ module Subito
       end
      end
 
-    #return the id of the show name
+    #return the id of the show
     def get(name)
       if self.hash.empty?
-        absolute_filename = File.join(Dir.home, self.filename)
+        absolute_filename = File.join(Dir.home, @filename)
         write unless File.exists? absolute_filename
         self.hash = YAML.load_file absolute_filename
       end

@@ -7,12 +7,16 @@ module Subito
       p options
       #build database
       if options[:create_database]
-        puts "Creating database..."
         Dir.chdir(Dir.home){YamlDatabase.instance.write }
       end
       
+      #change directory
       Dir.chdir(options[:working_directory]) do 
-        
+        Dir.glob(options[:name]).each do |show|
+          s = ShowFeature.new
+          s.parse_show show
+          puts s
+        end
       end
     end
   end

@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 $:.unshift File.join(File.dirname(__FILE__), '..' , 'lib')      
 require 'subito/subito'
+require 'subito/showfeature'
 require 'subito/application'
 
 opt = Subito::SubitoArgParser.parse(ARGV)
