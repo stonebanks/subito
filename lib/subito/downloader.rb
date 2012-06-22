@@ -13,8 +13,11 @@ module Subito
     def retrieve_url_for(language)
       nil
       team = tv_show_feature.team
-      url = SConfig.instance.ressources_subsite_name + hash[team][language] if 
-        hash.has_key? team and hash[team].has_key? language
+      if hash.has_key? team and hash[team].has_key? language
+        url = SConfig.instance.ressources_subsite_name + hash[team][language].first
+      elsif (real_team = hash.keys.detect {|k| k.include? team})
+        url = SConfig.instance.ressources_subsite_name + hash[real_team][language].first if (hash[real_team].has_key? language)
+      end
     end
 
     def download(test = @url)
