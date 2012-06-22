@@ -10,14 +10,14 @@ include Subito
 class DownloadManagerTest < Test::Unit::TestCase
 
   def setup
-    hash_urls =  {  "fqm" => { "english" => '/original/1122/0',
-                              "french"  => '/original/21/3' },
-                    "lol" => { "english" => '/original/1223/0' }}
+    hash_urls =  {  "x264-asap" => { "english" => ['/original/1122/0'],
+                              "french"  => ['/original/21/3'] },
+                    "lol" => { "english" => ['/original/1223/0'] }}
     @tv_show_feature = flexmock("TVShowFeature")
     @downloader = Downloader.new(hash_urls, @tv_show_feature)
     flexmock(SConfig).new_instances(:instance).should_receive(:ressources_subsite_name).and_return("http://toto.com")
   end
-  def test_should_retrieve_url_for_the_right_team_and_language
+  def test_should_retrieve_url_for_the_team_and_language
     @tv_show_feature.should_receive(:team =>"lol")
     assert_equal('http://toto.com/original/1223/0', 
                  @downloader.retrieve_url_for("english"))
@@ -32,7 +32,12 @@ class DownloadManagerTest < Test::Unit::TestCase
     @tv_show_feature.should_receive(:team =>"lol")
     assert_nil(@downloader.retrieve_url_for("foo"))
   end
-
+  
+  def test_should_retrieve_url_if_team_contains_the_given_character
+    @tv_show_feature.should_receive(:team =>"asap")
+    assert_equal('http://toto.com/original/1122/0', 
+                 @downloader.retrieve_url_for("english"))
+  end
   # def test_download_should_succeed
   #   FakeWeb.register_uri(:get,
   #                        %r|http://example\.com/|,
