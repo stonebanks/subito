@@ -33,5 +33,15 @@ class ShowFeatureTest < Test::Unit::TestCase
   def test_should_return_the_team_of_the_show
     assert_equal @team, @showfeature.team
   end
+
+  def test_all_attrs_should_return_nil
+    showfeature = ShowFeature.new
+    showfeature.parse_show "ff.s01e09.avi"
+    assert_block do
+      [:name, :episode, :season, :team, :id].collect!{|x| showfeature.send(x)}.all?do |x|
+        x.nil?
+      end
+    end
+  end
   
 end

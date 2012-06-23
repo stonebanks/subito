@@ -16,14 +16,16 @@ module Subito
       if hash.has_key? team and hash[team].has_key? language
         url = SConfig.instance.ressources_subsite_name + hash[team][language].first
       elsif (real_team = hash.keys.detect {|k| k.include? team})
-        url = SConfig.instance.ressources_subsite_name + hash[real_team][language].first if (hash[real_team].has_key? language)
+        url = SConfig.instance.ressources_subsite_name + hash[real_team][language].first if hash[real_team].has_key? language
+      # elsif team.nil?
+      #   url= SConfig.instance.ressources_subsite_name + hash.values.first.values.flatten!.first unless hash.values.empty? and hash.values.first.values.empty?  
       end
     end
 
     def download(test = @url)
       Browser.instance.get(test) do |result|
-        filename = tv_show_feature.raw_name[/^(.*\.)[\d\w]{3}$/i,1] + "srt"
-        result.save_as(filename) if result.kind_of? Mechanize::File
+       # filename = tv_show_feature.raw_name[/^(.*\.)[\d\w]{3}$/i,1] + "srt"
+        result.save if result.kind_of? Mechanize::File
       end unless test.nil?
     end
 
