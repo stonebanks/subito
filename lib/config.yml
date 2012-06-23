@@ -1,7 +1,7 @@
 ressources:
  subsite_name: "http://www.addic7ed.com/"
  ##searching_url: "search.php?search=<%= name%>+<%= '%01d'%season%>x<%= episode%>&Submit=Search"
- searching_url: "re_episode.php?ep=<%= show_id%>-<%= season%>x<%= episode%>"
+ searching_url: "re_episode.php?ep=<%= args[:id]%>-<%= args[:season]%>x<%= args[:episode]%>"
 #subtitle_url_getter
 xpaths:
  sections: "//div[@id='container95m']//table[@class='tabel95' and @width]"

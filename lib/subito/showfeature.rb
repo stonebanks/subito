@@ -16,7 +16,8 @@ module Subito
     end
 
     def get_id(name)
-      YamlDatabase.instance.get(name)
+      nil
+      YamlDatabase.instance.get(name) unless name.nil?
     end
 
     def to_s
