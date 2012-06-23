@@ -36,7 +36,7 @@ module Subito
         opts.on("--[no-]renaming", "Rename the subtitle file as the raw name (default)") do |t| 
           options[:to_rename] = t
         end
-        opts.on("--as-if oldname,newname", Array, "Run the application considering the name 'oldname' of the show is now 'newname'") do |array|
+        opts.on("--replace oldname,newname", Array, "Run the application considering the name 'oldname' of the show is now 'newname'") do |array|
           array[1] ||= array[0]
           options[:as_if] = {array[0] => array[1]}
         end

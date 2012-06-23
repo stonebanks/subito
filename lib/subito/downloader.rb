@@ -24,10 +24,10 @@ module Subito
       end
     end
 
-    def download(test = url)
+    def download(url, filename = nil)
       Browser.instance.get(test) do |result|
-       # filename = tv_show_feature.raw_name[/^(.*\.)[\d\w]{3}$/i,1] + "srt"
-        result.save if result.kind_of? Mechanize::File
+        #filename = tv_show_feature.raw_name[/^(.*\.)[\d\w]{3}$/i,1] + "srt"
+        result.save_as(filename) if result.kind_of? Mechanize::File
       end unless test.nil?
     end
 

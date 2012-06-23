@@ -15,7 +15,12 @@ module Subito
         Dir.glob(options[:name]).each do |show|
           s = ShowFeature.new
           s.parse_show show
-          puts s
+          searcher = Searcher.new
+          page = searcher.search(id: s.id, season: s.season, episode: s.episode)
+          subtitles_urls = SubtitlesUrlsGetter.new(page).run
+          downloader = Downloader.new(subtitles_urls)
+          url = downloader.retrieve_url_for(language: options[:language], team: options[:team])
+          downloader.download(url,options[:to_rename] ? show[/^(.*\.)[\d\w]{3}$/i,1] + "srt": nil)
         end
       end
     end
