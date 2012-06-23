@@ -4,12 +4,12 @@ require 'subito/browser'
 
 module Subito
   class Downloader
-    attr_accessor :hash,:url#,:tv_show_feature
+    attr_accessor :hash
     def initialize(hash_urls)
       @hash = hash_urls
     end
         
-    def retrieve_url_for(args)
+    def retrieve_url_for(args = {})
       args = {:language => nil, :team => nil}.merge(args)
       team = args[:team]
       language = args[:language]
