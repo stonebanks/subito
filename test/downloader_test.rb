@@ -28,7 +28,7 @@ class DownloadManagerTest < Test::Unit::TestCase
                  @downloader.retrieve_url_for(language: "english", team: "lol"))
   end
 
-  def test_must_retrieve_url_for_the_given_language_but_team_not_complete
+  def test_must_retrieve_url_for_the_given_language_if_team_not_complete
     assert_equal('http://toto.com/original/1122/0', 
                  @downloader.retrieve_url_for(language: "english", team: "asap"))
   end

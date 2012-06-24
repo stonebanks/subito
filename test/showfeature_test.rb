@@ -21,7 +21,7 @@ class ShowFeatureTest < Test::Unit::TestCase
   end 
 
   def test_should_return_the_name_of_the_show
-    assert_equal @name.gsub(/\./," "),@showfeature.name
+    assert_equal @name.tr_s('.',' '),@showfeature.name
   end
 
   def test_should_return_the_episode_of_the_show
@@ -32,6 +32,26 @@ class ShowFeatureTest < Test::Unit::TestCase
   end
   def test_should_return_the_team_of_the_show
     assert_equal @team, @showfeature.team
+  end
+
+  def test_dyn_replace_must_change_the_value_of_the_given_attribute
+    @showfeature.dyn_replace :name=, "something_that_is_not_a_random_generated_stuff"
+    assert_equal "something_that_is_not_a_random_generated_stuff", @showfeature.name
+  end
+
+  def test_id_must_not_be_set
+    @showfeature.dyn_replace :name=, "something_that_is_not_a_random_generated_stuff"
+    assert_nil @showfeature.id
+  end
+  
+  def test_id_must_be_set_if_block_given
+    showfeature = ShowFeature.new
+    assert_block do 
+      showfeature.parse_show(@show) do |s|
+        showfeature.dyn_replace :name=, "something_that_is_not_a_random_generated_stuff"
+      end 
+      showfeature.id == "42"
+    end
   end
 
   def test_all_attrs_should_return_nil
@@ -45,3 +65,4 @@ class ShowFeatureTest < Test::Unit::TestCase
   end
   
 end
+
