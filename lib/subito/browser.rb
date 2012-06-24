@@ -2,7 +2,6 @@ require 'mechanize'
 require 'singleton'
 require 'subito/exception'
 
-
 module Subito
    
   class Browser
@@ -14,7 +13,7 @@ module Subito
 
     def get(url)
       begin
-        ret = @agent.get (url) 
+        ret = @agent.get(url, [], url)
         yield(ret) if block_given?
         ret
       rescue Mechanize::Error

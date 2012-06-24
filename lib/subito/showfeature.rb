@@ -3,7 +3,7 @@ require 'subito/yml_database'
 module Subito
 
   class ShowFeature
-    attr_accessor :id, :raw_name, :name, :team, :episode, :season
+    attr_accessor :id, :name, :team, :episode, :season
     PATTERN = /(^[\w\.\(\)]+)\.(\d{3}|s?\d{1,2}[ex]?\d{2})\..*-(.*)\.[\d\w]{3}$/i
  
     def parse_show(str)
@@ -11,16 +11,19 @@ module Subito
       @season = str[PATTERN,2].nil? ? nil : "%02d" % str[PATTERN,2][/(\d+).?(\d{2}$)/,1].to_i
       @episode = str[PATTERN,2].nil? ? nil : "%02d" % str[PATTERN,2][/(\d+).?(\d{2}$)/,2].to_i
       @team = str[PATTERN,3].nil? ? nil : str[PATTERN,3].downcase
-      @id = get_id(@name)
+      if block_given?
+        yield(self)
+        retrieve_id(name)
+      end
     end
 
-    def get_id(name)
+    def retrieve_id(name)
       nil
-      YamlDatabase.instance.get(name) unless name.nil?
+      @id = YamlDatabase.instance.get(name) unless name.nil?
     end
 
-    def dyn_replace
-      
+    def dyn_replace(sym,value)
+      self.send(sym,value)
     end
     
     def to_s
