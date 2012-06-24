@@ -8,8 +8,11 @@ module Subito
   class Application
     def self.run(options)
       p options
-      #build database
+      verbose = Verbose.instance
+      verbose.set (options[:v], STDOUT, Logger.new(STDOUT))
+      verbose.msg("Application is running with create_database option", :info)
       if options[:create_database]
+        verbose.msg("Creating Database...")
         Dir.chdir(Dir.home){YamlDatabase.instance.write }
       end
       

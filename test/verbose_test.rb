@@ -7,7 +7,7 @@ class VerboseTest < Test::Unit::TestCase
   def test_must_output_a_simple_formatted_message_if_setting_is_default_and_enable_if_false
     r, w = IO.pipe
     verbose = Verbose.instance
-    verbose.set false, w, Logger.new(nil)
+    verbose.set false, w
     verbose.msg('hello world')
     w.close
     ret = r.read
@@ -18,7 +18,7 @@ class VerboseTest < Test::Unit::TestCase
   def test_must_not_display_anything_if_settings_isnt_default_and_enable_is_false
     r, w = IO.pipe
     verbose = Verbose.instance
-    verbose.set false, w, Logger.new(nil)
+    verbose.set false, w
     verbose.msg('hello world', :info)
     w.close
     ret = r.read
@@ -30,7 +30,7 @@ class VerboseTest < Test::Unit::TestCase
   def test_must_display_an_info_message_if_enable_is_set_and_setting_is_info
     r, w = IO.pipe  
     verbose = Verbose.instance
-    verbose.set true, w, Logger.new(w)
+    verbose.set true, w
     verbose.msg('hello world', :info)
     w.close
     ret = r.read
@@ -41,7 +41,7 @@ class VerboseTest < Test::Unit::TestCase
   def test_must_display_a_warning_message_if_enable_is_set_and_setting_is_warn
     r, w = IO.pipe 
     verbose = Verbose.instance
-    verbose.set true, w, Logger.new(w)
+    verbose.set true, w
     verbose.msg('hello world', :warn)
     w.close
     ret = r.read
