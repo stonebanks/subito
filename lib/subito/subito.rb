@@ -12,6 +12,7 @@ module Subito
         :name => "*.{avi,mp4,mkv}", 
         :to_rename => true,
         :as_if =>{}
+        :v => false
       }
 
       languages = SConfig.instance.data["language"]
@@ -39,6 +40,10 @@ module Subito
         opts.on("--replace oldname,newname", Array, "Run the application considering the name 'oldname' of the show is now 'newname'") do |array|
           array[1] ||= array[0]
           options[:as_if] = {array[0] => array[1]}
+        end
+
+        opts.on("-v","--verbose", "if enabled, display more accurate information") do |v|
+          options[:v] = v
         end
         opts.on_tail("-h", "--help", "Show this message") do
           puts opts
