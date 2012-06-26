@@ -11,7 +11,7 @@ module Subito
         :working_directory => ".", 
         :name => "*.{avi,mp4,mkv}", 
         :to_rename => true,
-        :as_if =>{}
+        :as_if =>{},g
         :v => false
       }
 

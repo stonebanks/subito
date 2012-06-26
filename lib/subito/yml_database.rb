@@ -43,7 +43,7 @@ module Subito
     # Return the id of the show for the given name
     #
     # @param [String] name the name of the tv show
-    # @return [String] the corresponding
+    # @return [String] the corresponding id
     def get(name)
       if self.dictionnary.empty?
         absolute_filename = File.join(Dir.home, @filename)

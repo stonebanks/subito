@@ -16,7 +16,7 @@ class TestSearcher < Test::Unit::TestCase
                          :body => "Nothing to be found 'round here",
                          :status => ["404", "Not Found"])
     assert_raises WebSiteNotReachableError do
-      @connector.connect
+      @connector.send(:connect)
     end
   end
 
@@ -24,7 +24,7 @@ class TestSearcher < Test::Unit::TestCase
     FakeWeb.register_uri(:get, %r(http://.*),
                           :body =>  "<form><div><b>0 results found</b></div></form>",
                           :content_type => "text/html")
-    assert_instance_of Mechanize::Page, @connector.connect
+    assert_instance_of Mechanize::Page, @connector.send(:connect)
   end
 
 
