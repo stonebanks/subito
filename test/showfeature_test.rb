@@ -11,6 +11,7 @@ class ShowFeatureTest < Test::Unit::TestCase
   include FlexMock::TestCase
   def setup
     flexmock(YamlDatabase).new_instances(:instance).should_receive(:get).with(String).and_return("42")
+    flexmock(Verbose).new_instances(:instance).should_receive(:msg).with(String, Symbol).and_return(nil)
     t = ([('a'..'z'),(0..9)].map{|i| i.to_a}).flatten
     r=  (t<<['(',')','.']).flatten
     @name = (0..30).map{r.sample}.join
@@ -39,11 +40,10 @@ class ShowFeatureTest < Test::Unit::TestCase
     assert_equal "something_that_is_not_a_random_generated_stuff", @showfeature.name
   end
 
-  def test_id_must_not_be_set
-    @showfeature.dyn_replace :name=, "something_that_is_not_a_random_generated_stuff"
-    assert_nil @showfeature.id
+  def test_retrieve_id_must_return_nil_if_name_nil
+    assert_nil @showfeature.retrieve_id nil
   end
-  
+
   def test_id_must_be_set_if_block_given
     showfeature = ShowFeature.new
     assert_block do 
