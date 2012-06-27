@@ -12,17 +12,17 @@ module Subito
       # Verbose class instanciation
       verbose = Verbose.instance
       verbose.set(options[:v],STDOUT)
-      verbose.msg("Application is running with create_database option", :debug)
+      verbose.msg("Application is running with create_database option", :info)
       if options[:create_database]
         verbose.msg("Creating Database...")
         Dir.chdir(Dir.home){YamlDatabase.instance.write }
-        verbose.msg("Database creation succeed", :debug)
+        verbose.msg("Database creation succeed", :info)
       end
        
-      verbose.msg("Change directory, going in #{options[:working_directory]}", :debug)
+      verbose.msg("Change directory, going in #{options[:working_directory]}", :info)
       # Going in working directory
       Dir.chdir(options[:working_directory]) do 
-        verbose.msg("Considering only files following pattern #{options[:name]}", :debug)
+        verbose.msg("Considering only files following pattern #{options[:name]}", :info)
         Dir.glob(options[:name]).each do |show|
           verbose.msg("Computing show : #{show}")
           basename = show[/^(.*\.)[\d\w]{3}$/i,1]
@@ -30,11 +30,12 @@ module Subito
             s = ShowFeature.new
             s.parse_show(show) do |s| 
               unless options[:as_if][s.name].nil?
-              Verbose.instance.msg("Replacing #{s.name} by #{options[:as_if][s.name]}", :debug)
+              Verbose.instance.msg("Replacing #{s.name} by #{options[:as_if][s.name]}", :info)
               s.dyn_replace(:name=, options[:as_if][s.name])
               end
             end
             searcher = Searcher.new
+            verbose.msg "Connecting to subtitles page", :info
             page = searcher.search(id: s.id, season: s.season, episode: s.episode)
             subtitles_urls = SubtitlesUrlsGetter.new(page).run
             downloader = Downloader.new(subtitles_urls)

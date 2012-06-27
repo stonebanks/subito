@@ -3,12 +3,23 @@ require 'subito/config'
 require 'subito/browser'
 
 module Subito
+  # This class provides methods for parsing the subtitles page
+  #
+  # @since 0.2.0
   class Downloader
     attr_accessor :hash
+    
+    # Constructor
     def initialize(hash_urls)
       @hash = hash_urls
     end
-        
+    
+    # Search in a hash of subtitles (see SubtitlesUrlsGetter#run) the right urls given the language and team
+    #
+    # @param [Hash] args 
+    # @option args [String] :language The language the user want the subtitles to be in
+    # @option args [String] :team the team that encoded the video tv show
+    # @return [Mechanize::Page] an link to the subtitles
     def retrieve_url_for(args = {})
       args = {:language => nil, :team => nil}.merge(args)
       team = args[:team]
@@ -23,10 +34,18 @@ module Subito
         SConfig.instance.ressources_subsite_name + result.last[language].first unless result.nil?
       end
     end
-
+    
+    # Download a file given the url where it's from
+    #
+    # @param [String] url
+    # @return [Mechanize::Page] an link to the subtitles
     def download(url, filename = nil)
-      Browser.instance.get(url) do |result|
-        result.save_as(filename) unless result.kind_of? Mechanize::Page
+      Browser.instance.get(url) do |result| 
+        verbose = Verbose.instance
+        unless result.kind_of? Mechanize::Page
+          result.save_as(filename) unless result.kind_of? Mechanize::Page
+          verbose.msg ""
+        end
       end unless url.nil?
     end
 

@@ -136,6 +136,7 @@ class TestSubtitlesUrlsGetter < Test::Unit::TestCase
 </body>
     EOF
     FakeWeb.register_uri(:get, "http://www.foo.com", :body => page, :content_type =>"text/html" )
+    flexmock(Verbose).new_instances(:instance).should_receive(:msg).with(String, Symbol).and_return(nil)
     @subs = SubtitlesUrlsGetter.new Mechanize.new.get("http://www.foo.com")
   end
   
