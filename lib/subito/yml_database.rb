@@ -16,14 +16,13 @@ module Subito
     # attr_reader
     attr_reader :filename
     # attr_accessor
-    attr_accessor :hash
+    attr_accessor :dictionnary
     # Constructor
     def initialize(filename = '.subito.store')
       @filename, @dictionnary = filename, {}
     end
 
-    # Write the database of series
-    # elements are name_of_show: id
+    # Write the tv shows database, elements in the base are name_of_show => id
     def write
       Verbose.instance.msg "Connecting to #{SConfig.instance.ressources_subsite_name}", :debug
       page = Browser.instance.get SConfig.instance.ressources_subsite_name
@@ -32,7 +31,7 @@ module Subito
       nodeset.each do |node|
         @dictionnary[node.text.downcase] = node.attr('value')
       end
-      Verbose.instance.msg "Creating Database file in $HOME/#{self.filename}", :info
+      Verbose.instance.msg "Creating Database file in $HOME/#{self.filename}", :debug
       Dir.chdir Dir.home do 
         File.open(self.filename, 'w') do |out|
           YAML.dump(@dictionnary, out)
@@ -48,10 +47,10 @@ module Subito
       if self.dictionnary.empty?
         absolute_filename = File.join(Dir.home, @filename)
         unless File.exists? absolute_filename
-          Verbose.instance.msg "#{absolute_filename} does not exist, It needed to be created", :info
+          Verbose.instance.msg "#{absolute_filename} does not exist, It needed to be created", :debug
           write
         end
-        Verbose.instance.msg "Loading Database...", :info
+        Verbose.instance.msg "Loading Database...", :debug
         self.dictionnary = YAML.load_file absolute_filename
       end
       self.dictionnary[name]
