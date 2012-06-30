@@ -1,7 +1,6 @@
 require 'mechanize'
 require 'singleton'
-require 'subito/exception'
-require 'subito/verbose'
+require 'subito'
 
 module Subito
   # This class wraps some mechanize routine

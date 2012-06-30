@@ -1,6 +1,5 @@
 $:.unshift File.join(File.dirname(__FILE__), '..')
-require 'subito/yml_database'
-require 'subito/verbose'
+require 'subito'
 
 module Subito
   # An instance of this class contains the default elements featuring a show
@@ -36,7 +35,10 @@ module Subito
     # @return [String] the corresponding id
     def retrieve_id(name)
       nil
-      @id = YamlDatabase.instance.get(name) unless name.nil?
+      unless name.nil? 
+        Verbose.instance.msg "Getting id for #{name}", :debug
+        @id = YamlDatabase.instance.get(name) 
+      end
     end
     
     # Replace dynamically an attribute with the given value while running
@@ -44,7 +46,7 @@ module Subito
     # @param [Symbol] sym the setter of the attribute
     # @param [String] value new value
     def dyn_replace(sym,value)
-      self.send(sym,value)
+      self.send(sym,value.downcase)
     end
 
     # Overloaded to_s method

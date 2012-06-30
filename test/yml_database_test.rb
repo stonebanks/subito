@@ -12,7 +12,7 @@ class TestYmlDatabase < Test::Unit::TestCase
   end
   
   def test_method_get_all_shows_similar_to_a_string_must_return_an_array
-    @db.hash = {
+    @db.dictionnary = {
       "fubar"=>12, 
       "fobar"=>15,
       "fooobar"=>19,

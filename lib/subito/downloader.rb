@@ -1,6 +1,6 @@
 $:.unshift File.join(File.dirname(__FILE__), '..')
-require 'subito/config'
-require 'subito/browser'
+require 'mechanize'
+require 'subito'
 
 module Subito
   # This class provides methods for parsing the subtitles page
@@ -38,13 +38,13 @@ module Subito
     # Download a file given the url where it's from
     #
     # @param [String] url
-    # @return [Mechanize::Page] an link to the subtitles
+    # @return [Mechanize::Page] a link to the subtitles
     def download(url, filename = nil)
       Browser.instance.get(url) do |result| 
         verbose = Verbose.instance
         unless result.kind_of? Mechanize::Page
-          result.save_as(filename) unless result.kind_of? Mechanize::Page
-          verbose.msg ""
+          result.save_as(filename) 
+          verbose.msg "Download completed #{filename}"
         end
       end unless url.nil?
     end

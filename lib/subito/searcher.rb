@@ -1,7 +1,5 @@
 $:.unshift File.join(File.dirname(__FILE__), '..')
-require 'subito/config'
-require 'subito/browser'
-require 'subito/verbose'
+require 'subito'
 
 module Subito
   
