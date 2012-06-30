@@ -3,9 +3,7 @@ $:.unshift File.join(File.dirname(__FILE__), '..')
 require 'yaml'
 require 'singleton'
 require 'amatch'
-require 'subito/browser'
-require 'subito/config'
-
+require 'subito'
 include Amatch
 module Subito
   # This class contains methods used for the access of the yaml database
