@@ -1,0 +1,12 @@
+
+* Some subtitles versions work fine with some 720p version 
+   (eg: LOL works with 720p DIMENSION)
+   This is not yet supported.
+* When the name of a show is typoed or not complete, parse the
+   database to propose the user some plausible using JaroWinkler
+   distance so he can rerun subito with replace option
+* When applciation is unable to download an subtitle file, tell the
+   reason why in verbose mode (eg: no team given, name not found in database etc...)
+
+* Manage the case when connection is done with a proxy
+

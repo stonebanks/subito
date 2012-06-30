@@ -1,3 +1,18 @@
+# This file is part of Subito.
+
+# Subito is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+
+# Subito is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with Subito.  If not, see <http://www.gnu.org/licenses/>.
+
 $:.unshift File.join(File.dirname(__FILE__), '..')
 require 'optparse'
 require 'subito'
@@ -26,7 +41,7 @@ module Subito
       languages = SConfig.instance.data["language"]
 
       opts = OptionParser.new do |opts|
-        opts.banner = "Usage: subito [options] "
+        opts.banner = "Subito #{Subito::VERSION}\nUsage: subito [options] "
         opts.separator ""
         opts.separator "Specific options:"
         opts.on("-l","--language LANGUAGE", languages.keys, "Download the LANGUAGE version of the subtitle file, option are #{languages}") do |lang|
