@@ -1,18 +1,6 @@
 ## Subito ##
 Subito is a utility application easing tv show subtitles download.
 
-### Usage ###
-You can find help by launching 
-
-$ path_to_subito_directory/bin
-
-$ ./subito --help
-
-or
- 
-$ ruby subito --help
-
-
 ### Requirements ###
 * Ruby >1.9
 * Mechanize
@@ -22,7 +10,19 @@ and:
  to run tests.
 
 To install dependencies, run :
+
 $ bundle install
+
+### Usage ###
+You can find help by launching 
+
+$ cd path/to/subito/directory/bin
+
+$ ./subito --help
+
+or
+ 
+$ ruby subito --help
 
 ### TODO and Known issues ###
 * Read the TODO file.
