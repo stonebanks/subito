@@ -4,6 +4,7 @@ source :rubygems
 
 gem "mechanize", "~>2.5.1"
 gem "amatch", "~>0.2.10"
+gem "colored"
 
 #group :test do
 gem "fakeweb", "~>1.3.0"

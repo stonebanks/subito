@@ -3,6 +3,7 @@ GEM
   specs:
     amatch (0.2.10)
       tins (~> 0.3)
+    colored (1.2)
     domain_name (0.5.3)
       unf (~> 0.0.3)
     fakeweb (1.3.0)
@@ -18,18 +19,24 @@ GEM
     mime-types (1.19)
     net-http-digest_auth (1.2.1)
     net-http-persistent (2.7)
+    nokogiri (1.5.5)
     nokogiri (1.5.5-java)
     ntlm-http (0.1.1)
     test-unit (2.5.0)
     tins (0.4.3)
+    unf (0.0.5)
+      unf_ext
     unf (0.0.5-java)
+    unf_ext (0.0.5)
     webrobots (0.0.13)
 
 PLATFORMS
   java
+  ruby
 
 DEPENDENCIES
   amatch (~> 0.2.10)
+  colored
   fakeweb (~> 1.3.0)
   flexmock (~> 0.9.0)
   mechanize (~> 2.5.1)
