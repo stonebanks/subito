@@ -4,9 +4,12 @@ Subito is a utility application easing tv show subtitles download.
 ### Usage ###
 You can find help by launching 
 
-$ <path_to_subito_directory>/bin
+$ path_to_subito_directory/bin
+
 $ ./subito --help
-or 
+
+or
+ 
 $ ruby subito --help
 
 
