@@ -12,7 +12,7 @@ and:
 * Fakeweb
  to run tests.
 
-To install dependencies, run :
+To install dependencies, in the application directory root, run :
 
 $ bundle install
 
