@@ -25,9 +25,7 @@ module Subito
       verbose.msg "Application is running, option are #{options}", :info
       # Create database if asked
       if options[:create_database]
-        verbose.msg("Creating Database...")
         Dir.chdir(Dir.home){YamlDatabase.instance.write }
-        verbose.msg("Database creation succeed", :info)
       end
        
       verbose.msg("Change directory, going in #{options[:working_directory]}", :info)
@@ -78,7 +76,7 @@ module Subito
         verbose.msg "Downloading subtitle for #{show} from #{url}..." 
         res = downloader.download(url,options[:to_rename] ? show[/^(.*\.)[\d\w]{3}$/i,1] + "srt": nil)
       else
-        verbose.msg "Unable to download subtitles for #{show} in #{options[:complete_language]}"
+        verbose.msg "Unable to download subtitles for #{show} in #{options[:complete_language]}. For more info, run with -v option"
       end
     end
 

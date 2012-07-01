@@ -37,19 +37,22 @@ module Subito
 
     # Write the tv shows database, elements in the base are name_of_show => id
     def write
-      Verbose.instance.msg "Connecting to #{SConfig.instance.ressources_subsite_name}", :debug
+      verbose = Verbose.instance
+      verbose.msg("Creating Database...")
+      verbose.msg "Connecting to #{SConfig.instance.ressources_subsite_name}", :debug
       page = Browser.instance.get SConfig.instance.ressources_subsite_name
-      Verbose.instance.msg "Parsing the page", :debug
+      verbose.msg "Parsing the page", :debug
       nodeset = page.parser.xpath SConfig.instance.yaml_database_data_xpath
       nodeset.each do |node|
         @dictionnary[node.text.downcase] = node.attr('value')
       end
-      Verbose.instance.msg "Creating Database file in $HOME/#{self.filename}", :debug
+      verbose.msg "Creating Database file in $HOME/#{self.filename}", :debug
       Dir.chdir Dir.home do 
         File.open(self.filename, 'w') do |out|
           YAML.dump(@dictionnary, out)
         end      
       end
+      verbose.msg("Database creation succeed", :info)
      end
 
     # Return the id of the show for the given name
@@ -66,7 +69,9 @@ module Subito
         Verbose.instance.msg "Loading Database...", :debug
         self.dictionnary = YAML.load_file absolute_filename
       end
-      self.dictionnary[name]
+      id = self.dictionnary[name]
+      Verbose.instance.msg("#{name} isn't in database. You may need to update database by running the application with -d option", :debug) if id.nil?
+      id
     end
 
     def get_all_shows_similar_to(str, threshold =0.7, method = JaroWinkler)
