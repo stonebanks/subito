@@ -14,7 +14,7 @@
 # along with Subito.  If not, see <http://www.gnu.org/licenses/>.
 
 module Subito
-  VERSION = "0.2.0"
+  VERSION = "0.2.1"
   ROOT = File.expand_path(File.dirname(__FILE__))
   Dir.glob(File.join(ROOT, "subito",'*.rb')).each  do |file|
     require file
