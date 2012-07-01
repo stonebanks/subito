@@ -59,10 +59,10 @@ module Subito
         verbose = Verbose.instance
         unless result.kind_of? Mechanize::Page
           result.save_as(filename) 
-          verbose.msg "Download completed #{filename}"
+          verbose.msg "#{filename} : Download completed", :default, head:"[SUCCEED] ".green
         else
-          verbose.msg "Subtitle can't be downloaded for #{filename}, this may be due to the reaching of \
-maximal amount of files downloadable per day on #{SConfig.instance.ressources_subsite_name}"
+          verbose.msg " #{filename} Subtitle can't be downloaded, this may be due to the reaching of \
+maximal amount of files downloadable per day on #{SConfig.instance.ressources_subsite_name}", :default, head:" [FAILED] "
         end
       end unless url.nil?
     end

@@ -42,10 +42,11 @@ module Subito
     # @param [Symbol] setting value are :default and all value levels of Logger
     #                 if :default the method only puts the simplest messages in IO
     #                 else all messages are puts in IO and are formatted like using Logger
-    def msg(message, setting = :default)
+    def msg(message, setting = :default, plus = {})
       nil
-      @io.puts(message) if not(@enabled) and setting.eql? :default
-      @logger.send(setting.eql?(:default)? :info : setting , message)if @enabled
+      plus = {head: nil, tail: nil}.merge(plus)
+      @io.print(plus[:head],message,plus[:tail],"\n") if not(@enabled) and setting.eql? :default
+      @logger.send(setting.eql?(:default)? :info : setting , message){plus[:head].to_s + plus[:tail].to_s}if @enabled
     end
   end
 end

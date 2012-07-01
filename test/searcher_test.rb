@@ -10,7 +10,7 @@ include Subito
 class TestSearcher < Test::Unit::TestCase
   def setup
     @connector = Searcher.new
-    flexmock(Verbose).new_instances(:instance).should_receive(:msg).with(String, Symbol).and_return(nil)
+    flexmock(Verbose).new_instances(:instance).should_receive(:msg).with_any_args.and_return(nil)
   end
   def test_must_raise_an_error_if_connection_cant_be_made
     FakeWeb.register_uri(:get, %r(http://.*), 

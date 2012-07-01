@@ -42,7 +42,7 @@ module Subito
             subtitles_urls = SubtitlesUrlsGetter.new(page).run
             download s, show, subtitles_urls, options
           else
-            verbose.msg "#{basename+ "srt"} already exists!"
+            verbose.msg "#{basename+ "srt"} already exists.", :default, head:"[AT EASE] ".green
           end
         end
       end
@@ -76,7 +76,7 @@ module Subito
         verbose.msg "Downloading subtitle for #{show} from #{url}..." 
         res = downloader.download(url,options[:to_rename] ? show[/^(.*\.)[\d\w]{3}$/i,1] + "srt": nil)
       else
-        verbose.msg "Unable to download subtitles for #{show} in #{options[:complete_language]}. For more info, run with -v option"
+        verbose.msg "#{show} : Unable to download subtitles in #{options[:complete_language]}. For more info, run with -v option", :default, head:" [FAILED] ".red
       end
     end
 

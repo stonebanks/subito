@@ -48,5 +48,6 @@ class VerboseTest < Test::Unit::TestCase
     r.close
     assert_match %r|^W,\s*\[.*\]\s*WARN.*hello\sworld.*|, ret
   end
- 
+
+  
 end

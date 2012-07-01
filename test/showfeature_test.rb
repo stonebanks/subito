@@ -11,7 +11,7 @@ class ShowFeatureTest < Test::Unit::TestCase
   include FlexMock::TestCase
   def setup
     flexmock(YamlDatabase).new_instances(:instance).should_receive(:get).with(String).and_return("42")
-    flexmock(Verbose).new_instances(:instance).should_receive(:msg).with(String, Symbol).and_return(nil)
+    flexmock(Verbose).new_instances(:instance).should_receive(:msg).with_any_args.and_return(nil)
     t = ([('a'..'z'),(0..9)].map{|i| i.to_a}).flatten
     r=  (t<<['(',')','.']).flatten
     @name = (0..30).map{r.sample}.join

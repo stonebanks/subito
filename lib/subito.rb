@@ -12,7 +12,7 @@
 
 # You should have received a copy of the GNU General Public License
 # along with Subito.  If not, see <http://www.gnu.org/licenses/>.
-
+require 'colored'
 module Subito
   VERSION = "0.2.1"
   ROOT = File.expand_path(File.dirname(__FILE__))
