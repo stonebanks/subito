@@ -10,3 +10,5 @@
 
 * Manage the case when connection is done with a proxy
 
+* Replace yml database by an sqlite one
+

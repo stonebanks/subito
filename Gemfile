@@ -3,7 +3,8 @@ source :rubygems
 #ruby "1.9.2"
 
 gem "mechanize", "~>2.5.1"
-gem "amatch", "~>0.2.10"
+gem "fuzzy-string-match", "~>0.9.3"
+gem "fuzzy-string-match_pure", "~>0.9.3"
 gem "colored"
 
 #group :test do

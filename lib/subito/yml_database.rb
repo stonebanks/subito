@@ -17,9 +17,8 @@ $:.unshift File.join(File.dirname(__FILE__), '..')
 
 require 'yaml'
 require 'singleton'
-require 'amatch'
 require 'subito'
-include Amatch
+require 'fuzzystringmatch'
 module Subito
   # This class contains methods used for the access of the yaml database
   #
@@ -73,11 +72,17 @@ module Subito
       Verbose.instance.msg("#{name} isn't in database. You may need to update database by running the application with -d option", :debug) if id.nil?
       id
     end
-
-    def get_all_shows_similar_to(str, threshold =0.7, method = JaroWinkler)
-     m =  method.new(str)
+    
+    # Return all shows which names are similar to the given one 
+    #
+    # @param [String] showname the name of a tv show
+    # @param [Float] the threshold from which similarity is considered
+    #
+    # @return [Hash] An hash of similar shows
+    def get_all_shows_similar_to(showname, threshold =0.7)
+      jarow = FuzzyStringMatch::JaroWinkler.create( :pure )
       @dictionnary.select do |k,v| 
-        m.similar(k) >= threshold
+        jarow.getDistance(  showname, k)  >= threshold
       end
     end
   end

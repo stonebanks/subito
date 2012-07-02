@@ -1,13 +1,18 @@
 GEM
   remote: http://rubygems.org/
   specs:
-    amatch (0.2.10)
-      tins (~> 0.3)
+    RubyInline (3.11.2)
+      ZenTest (~> 4.3)
+    ZenTest (4.8.1)
     colored (1.2)
     domain_name (0.5.3)
       unf (~> 0.0.3)
     fakeweb (1.3.0)
     flexmock (0.9.0)
+    fuzzy-string-match (0.9.3)
+      RubyInline (>= 3.8.6)
+      RubyInline (>= 3.8.6)
+    fuzzy-string-match_pure (0.9.3)
     mechanize (2.5.1)
       domain_name (~> 0.5, >= 0.5.1)
       mime-types (~> 1.17, >= 1.17.2)
@@ -23,7 +28,6 @@ GEM
     nokogiri (1.5.5-java)
     ntlm-http (0.1.1)
     test-unit (2.5.0)
-    tins (0.4.3)
     unf (0.0.5)
       unf_ext
     unf (0.0.5-java)
@@ -35,9 +39,10 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  amatch (~> 0.2.10)
   colored
   fakeweb (~> 1.3.0)
   flexmock (~> 0.9.0)
+  fuzzy-string-match (~> 0.9.3)
+  fuzzy-string-match_pure (~> 0.9.3)
   mechanize (~> 2.5.1)
   test-unit
