@@ -4,7 +4,7 @@ Subito is a utility application easing tv show subtitles download.
 ### Requirements ###
 * Ruby >1.9
 * Mechanize
-* amatch
+* fuzzy-string-match_pure
 
 and:
 
@@ -32,6 +32,7 @@ or
 ### TODO and Known issues ###
 * Read the TODO file.
 * <http://www.addic7ed.com>, the website on which the application relies on, doesn't allow any more downloads when non-premium user exceeds a certain amount. But there's many workarounds to prevent this...;)
+* Issues with JRuby
 
 ### License ###
 Copyright (c) 2012 Allan Seymour
