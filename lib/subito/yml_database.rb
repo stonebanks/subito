@@ -24,7 +24,7 @@ module Subito
   #
   # @since 0.2.0
   class YamlDatabase
-    include Singleton
+ #   include Singleton
     # attr_reader
     attr_reader :filename
     # attr_accessor
