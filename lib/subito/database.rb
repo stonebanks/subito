@@ -17,10 +17,15 @@ $:.unshift File.join(File.dirname(__FILE__), '..')
 require 'singleton'
 require 'subito'
 module Subito
+  # This class wraps instance of database accessor object, 
+  # 
+  #
+  # @since 0.3.0
   class Database
 
     attr_accessor :db
     include Singleton
+    # Constructor
     def initialize
       begin
         Kernel.send(:gem, 'sqlite3')
@@ -31,6 +36,18 @@ module Subito
         @db = YamlDatabase.new
       end
     end
-
+    
+    # Write the database, elements in the base are name_of_show => id
+    def write
+      Dir.chdir Dir.home do 
+        verbose = Verbose.instance
+        verbose.msg("Creating Database...") 
+        verbose.msg "Connecting to #{SConfig.instance.ressources_subsite_name}", :debug 
+        page = Browser.instance.get SConfig.instance.ressources_subsite_name
+        verbose.msg "Parsing the page", :debug
+        nodeset = page.parser.xpath SConfig.instance.yaml_database_data_xpath
+        @db.populate_db(nodeset, Proc.new{|x| [x.text.downcase.strip, x.attr('value')]})
+      end
+    end
   end
 end

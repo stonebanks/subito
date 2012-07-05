@@ -41,5 +41,15 @@ module Subito
         end  
       end
     end
+
+    def populate_db(args, proc)
+      FileUtils.rm_f(self.filename)
+      db = SQLite3::Database.new @filename
+      # Create a database
+      db.execute "create table if not exists showsid (name varchar(255),val int );"
+      args.each do |node|
+        db.execute "insert into showsid values ( ?, ? )", proc.call(node)
+      end
+    end
   end
 end
