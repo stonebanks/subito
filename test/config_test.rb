@@ -13,7 +13,7 @@ class TestSConfig < Test::Unit::TestCase
    :language_fr,
    :language_h,
    :language_cs,
-   :yaml_database_data_xpath].each do |method|
+   :database_data_xpath].each do |method|
     TestSConfig.class_eval  <<-EOS
         def test_method_#{method}_is_defined?
           assert(SConfig.instance.respond_to? :#{method}, "method undefined")
@@ -26,7 +26,7 @@ class TestSConfig < Test::Unit::TestCase
     end
 
     def test_method_must_return_string
-      assert_equal String, SConfig.instance.yaml_database_data_xpath.class
+      assert_equal String, SConfig.instance.database_data_xpath.class
     end
 end
 

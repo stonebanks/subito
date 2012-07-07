@@ -27,6 +27,6 @@ language:
  nl: "dutch"
  h: "hungarian" 
 
-yaml_database:
+database:
  data_xpath: "//select[@id='qsShow']//option"
 # directory: ""

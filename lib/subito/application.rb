@@ -25,7 +25,7 @@ module Subito
       verbose.msg "Application is running, option are #{options}", :info
       # Create database if asked
       if options[:create_database]
-        Dir.chdir(Dir.home){YamlDatabase.instance.write }
+        Dir.chdir(Dir.home){Database.instance.write }
       end
        
       verbose.msg("Change directory, going in #{options[:working_directory]}", :info)

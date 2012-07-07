@@ -16,9 +16,7 @@
 $:.unshift File.join(File.dirname(__FILE__), '..')
 
 require 'yaml'
-require 'singleton'
-require 'subito'
-require 'fuzzystringmatch'
+
 module Subito
   # This class contains methods used for the access of the yaml database
   #
@@ -35,36 +33,35 @@ module Subito
     end
 
     # Write the tv shows database, elements in the base are name_of_show => id
-    def write
-      verbose = Verbose.instance
-      verbose.msg("Creating Database...")
-      verbose.msg "Connecting to #{SConfig.instance.ressources_subsite_name}", :debug
-      page = Browser.instance.get SConfig.instance.ressources_subsite_name
-      verbose.msg "Parsing the page", :debug
-      nodeset = page.parser.xpath SConfig.instance.yaml_database_data_xpath
-      nodeset.each do |node|
-        @dictionnary[node.text.downcase] = node.attr('value')
-      end
-      verbose.msg "Creating Database file in $HOME/#{self.filename}", :debug
-      Dir.chdir Dir.home do 
-        File.open(self.filename, 'w') do |out|
-          YAML.dump(@dictionnary, out)
-        end      
-      end
-      verbose.msg("Database creation succeed", :info)
-     end
+    # def write
+    #   verbose = Verbose.instance
+    #   verbose.msg("Creating Database...")
+    #   verbose.msg "Connecting to #{SConfig.instance.ressources_subsite_name}", :debug
+    #   page = Browser.instance.get SConfig.instance.ressources_subsite_name
+    #   verbose.msg "Parsing the page", :debug
+    #   nodeset = page.parser.xpath SConfig.instance.yaml_database_data_xpath
+    #   nodeset.each do |node|
+    #     @dictionnary[node.text.downcase] = node.attr('value')
+    #   end
+    #   verbose.msg "Creating Database file in $HOME/#{self.filename}", :debug
+    #   Dir.chdir Dir.home do 
+    #     File.open(self.filename, 'w') do |out|
+    #       YAML.dump(@dictionnary, out)
+    #     end      
+    #   end
+    #   verbose.msg("Database creation succeed", :info)
+    #  end
 
-    # Return the id of the show for the given name
-    #
-    # @param [String] name the name of the tv show
-    # @return [String] the corresponding id
-    def get(name)
-      if self.dictionnary.empty?
-        absolute_filename = File.join(Dir.home, @filename)
-        unless File.exists? absolute_filename
-          Verbose.instance.msg "#{absolute_filename} does not exist, It needed to be created", :debug
-          write
-        end
+    def populate_db args, proc
+      FileUtils.rm_f(self.filename)
+      @dictionnary = Hash[*args.collect{|v| proc.call(v)}.flatten] 
+      File.open(self.filename, 'w') do |out|
+        YAML.dump(@dictionnary, out)
+      end
+    end
+
+    def find_id(name)
+      if self.dictionnary.empty? 
         Verbose.instance.msg "Loading Database...", :debug
         self.dictionnary = YAML.load_file absolute_filename
       end
@@ -72,17 +69,42 @@ module Subito
       Verbose.instance.msg("#{name} isn't in database. You may need to update database by running the application with -d option", :debug) if id.nil?
       id
     end
+    # Return the id of the show for the given name
+    #
+    # @param [String] name the name of the tv show
+    # @return [String] the corresponding id
+    # def get(name)
+    #   if self.dictionnary.empty?
+    #     absolute_filename = File.join(Dir.home, @filename)
+    #     unless File.exists? absolute_filename
+    #       Verbose.instance.msg "#{absolute_filename} does not exist, It needed to be created", :debug
+    #       write
+    #     end
+    #     Verbose.instance.msg "Loading Database...", :debug
+    #     self.dictionnary = YAML.load_file absolute_filename
+    #   end
+    #   id = self.dictionnary[name]
+    #   Verbose.instance.msg("#{name} isn't in database. You may need to update database by running the application with -d option", :debug) if id.nil?
+    #   id
+    # end
     
-    # Return all shows which names are similar to the given one 
-    #
-    # @param [String] showname the name of a tv show
-    # @param [Float] the threshold from which similarity is considered
-    #
-    # @return [Hash] An hash of similar shows
-    def get_all_shows_similar_to(showname, threshold =0.7)
-      jarow = FuzzyStringMatch::JaroWinkler.create( :pure )
+    # # Return all shows which names are similar to the given one 
+    # #
+    # # @param [String] showname the name of a tv show
+    # # @param [Float] the threshold from which similarity is considered
+    # #
+    # # @return [Hash] An hash of similar shows
+    # def get_all_shows_similar_to(showname, threshold =0.7)
+    #   jarow = FuzzyStringMatch::JaroWinkler.create( :pure )
+    #   @dictionnary.select do |k,v| 
+    #     jarow.getDistance(  showname, k)  >= threshold
+    #   end
+    # end
+    
+    def process(proc)
       @dictionnary.select do |k,v| 
-        jarow.getDistance(  showname, k)  >= threshold
+       # processor.getDistance(  showname, k)  >= threshold
+        proc.call(k)
       end
     end
   end

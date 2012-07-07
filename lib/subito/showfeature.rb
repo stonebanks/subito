@@ -52,7 +52,7 @@ module Subito
       nil
       unless name.nil? 
         Verbose.instance.msg "Getting id for #{name}", :debug
-        @id = YamlDatabase.instance.get(name) 
+        @id = Database.instance.get(name) 
       end
     end
     

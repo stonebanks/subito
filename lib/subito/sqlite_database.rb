@@ -17,39 +17,40 @@ $:.unshift File.join(File.dirname(__FILE__), '..')
 require 'sqlite3'
 
 module Subito
-  class SQliteDatabase
-    include Singleton
+
+  # This class , 
+  # 
+  #
+  # @since 0.3.0
+  class SQLiteDatabase
     attr_reader :filename
 
-    def initialize(filename = '.subito.store')
+    def initialize(filename = '.subito.db')
       @filename = filename
     end
 
-    def write 
-      Dir.chdir Dir.home do 
-        verbose = Verbose.instance
-        verbose.msg("Creating Database...")    
-        FileUtils.rm_f(self.filename)
-        db = SQLite3::Database.new @filename
-        # Create a database
-        rows = db.execute "create table if not exists showsid (name varchar(255),val int );"
-        verbose.msg "Connecting to #{SConfig.instance.ressources_subsite_name}", :debug
-        page = Browser.instance.get SConfig.instance.ressources_subsite_name
-        nodeset = page.parser.xpath SConfig.instance.yaml_database_data_xpath
-        nodeset.each do |node|
-          db.execute "insert into showsid values ( ?, ? )", [node.text.downcase, node.attr('value')]
-        end  
+    def populate_db(args, proc)
+      FileUtils.rm_f(@filename)
+      @db = SQLite3::Database.new @filename
+      @db.default_synchronous='off'
+      # Create a database
+      @db.execute "create table if not exists showsid (name varchar(255),id int );"
+      args.each do |node|
+        @db.execute "insert into showsid values ( ?, ? )", proc.call(node)
       end
     end
 
-    def populate_db(args, proc)
-      FileUtils.rm_f(self.filename)
-      db = SQLite3::Database.new @filename
-      # Create a database
-      db.execute "create table if not exists showsid (name varchar(255),val int );"
-      args.each do |node|
-        db.execute "insert into showsid values ( ?, ? )", proc.call(node)
+    def find_id(name)
+      @db = SQLite3::Database.new @filename if @db.nil?
+      ret = @db.execute "select id from showsid where name=?",name
+      ret.flatten.first
+    end
+
+    def process(proc)
+      @db.create_function("jarowp",1) do |func,x|
+        func.result = 1 if proc.call(x)
       end
+      Hash[@db.execute "select * from showsid where jarowp(name)=1"]
     end
   end
 end
