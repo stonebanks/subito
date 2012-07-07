@@ -30,11 +30,11 @@ module Subito
       begin
         Kernel.send(:gem, 'sqlite3')
         Kernel.require 'sqlite3'
-        require 'subito/sqlite_database'
+        require 'subito/databases/sqlite_database'
         @db = SQLiteDatabase.new
       rescue Gem::LoadError
         require 'yaml'
-        require 'subito/yml_database'
+        require 'subito/databases/yml_database'
         @db = YamlDatabase.new
       end
     end

@@ -39,7 +39,7 @@ class TestDatabase < Test::Unit::TestCase
   end
   
   def test_database_must_be_yaml_based_if_sqlite_cant_be_required
-    require 'subito/yml_database'
+    require 'subito/databases/yml_database'
     assert_kind_of YamlDatabase, Database.instance.db
   end
 
