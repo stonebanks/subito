@@ -18,7 +18,7 @@ require 'sqlite3'
 
 module Subito
 
-  # This class , 
+  # Sqlite based Adaptee class
   # 
   #
   # @since 0.3.0
@@ -28,24 +28,29 @@ module Subito
     def initialize(filename = '.subito.db')
       @filename = filename
     end
-
+    
     def populate_db(args, proc)
       FileUtils.rm_f(@filename)
       @db = SQLite3::Database.new @filename
       @db.default_synchronous='off'
       # Create a database
       @db.execute "create table if not exists showsid (name varchar(255),id int );"
-      args.each do |node|
-        @db.execute "insert into showsid values ( ?, ? )", proc.call(node)
+      dic = args.collect{|v| proc.call(v)}.flatten
+      dic.each_slice(400) do |args|
+        dictionnary = Hash[*args]
+        @db.execute("insert into showsid (name, id) values"+
+                    dictionnary.reduce("") do |mem,obj| 
+                      mem+"(\""+obj*"\","+")," 
+                    end.chop)
       end
     end
-
+    
     def find_id(name)
       @db = SQLite3::Database.new @filename if @db.nil?
       ret = @db.execute "select id from showsid where name=?",name
       ret.flatten.first
     end
-
+    
     def process(proc)
       @db.create_function("jarowp",1) do |func,x|
         func.result = 1 if proc.call(x)

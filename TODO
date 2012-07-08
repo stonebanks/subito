@@ -10,8 +10,4 @@
 
 * Manage the case when connection is done with a proxy
 
-* Replace yml database by an sqlite one (started)
-   Optimize database creation
-   Maybe change the way things are done : insert show in database as
-   new shows subtitles search is processed
 

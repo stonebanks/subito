@@ -1,7 +1,8 @@
 ## versions 
 
 ### 0.3.0
- * Integration SqliteDatabase, if dependancies to sqlite aren't satisfied the application runs with a yaml-based database
+ * Creation of a adapter class Database which wraps routine from SqliteDatabase and YamlDatabase
+ * if dependencies to sqlite aren't satisfied the application runs with a yaml-based database
 
 ### 0.2.2
 

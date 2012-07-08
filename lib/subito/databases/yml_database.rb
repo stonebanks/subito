@@ -18,11 +18,10 @@ $:.unshift File.join(File.dirname(__FILE__), '..')
 require 'yaml'
 
 module Subito
-  # This class contains methods used for the access of the yaml database
+  # Yaml based Adaptee class
   #
   # @since 0.2.0
   class YamlDatabase
- #   include Singleton
     # attr_reader
     attr_reader :filename
     # attr_accessor

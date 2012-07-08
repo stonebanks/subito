@@ -18,7 +18,7 @@ require 'singleton'
 require 'subito'
 require 'fuzzystringmatch'
 module Subito
-  # This class wraps instance of database accessor objects, 
+  # Wrapper class of Sqlite or YamlDatabase
   # 
   #
   # @since 0.3.0
@@ -39,7 +39,7 @@ module Subito
       end
     end
     
-    # Write the database, elements in the base are name_of_show => id
+    # Write the database. elements in the base are name_of_show => id
     def write
       Dir.chdir Dir.home do 
         verbose = Verbose.instance
