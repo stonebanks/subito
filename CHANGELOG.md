@@ -1,5 +1,7 @@
 ## versions 
 
+### 0.2.3
+ * Support subtitles that work with many versions (eg asap working with immerse)
 ### 0.2.2
 
  * Add CHANGELOG file

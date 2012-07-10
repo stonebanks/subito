@@ -47,6 +47,9 @@ module Subito
           document = Nokogiri::XML::Document.new
           document << node
           version = document.xpath('//td[@class = "NewsTitle"]').first.text[/Version (.*),.*MBs/,1]
+          # some version works also with other team
+          works_with_text = document.xpath('//td[@class="newsDate"][contains(text(), "Works with")]').text[/Works with(.*)$/,1]
+          works_with = works_with_text.nil? ? [] : works_with_text.split(',')
           verbose.msg "Team: #{version}", :debug
           payload = document.xpath("//td[@class='language']|//td[@class='language']//following-sibling::td")
           payload.each_slice(4) do |m|
@@ -55,7 +58,8 @@ module Subito
             verbose.msg "  Language: #{language}", :debug
             url = urls[urls.size - 1 ].attribute("href").value
             verbose.msg "   Url: #{url}", :debug
-            @hash_urls[version.downcase.strip][language.downcase.strip] <<  url if m[1].child.text.strip[/^Completed/]
+            (works_with << version).collect {|x| @hash_urls[x.downcase.strip][language.downcase.strip] <<  url if m[1].child.text.strip[/^Completed/] }
+#            @hash_urls[version.downcase.strip][language.downcase.strip] <<  url if m[1].child.text.strip[/^Completed/]
           end
         end
         verbose.msg "Subtitles: #{@hash_urls}", :debug
