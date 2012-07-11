@@ -4,6 +4,9 @@
  * Creation of a adapter class Database which wraps routine from SqliteDatabase and YamlDatabase
  * if dependencies to sqlite aren't satisfied the application runs with a yaml-based database
 
+### 0.2.3
+ * Support subtitles that work with many versions (eg asap working with immerse)
+
 ### 0.2.2
 
  * Add CHANGELOG file

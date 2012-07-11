@@ -33,10 +33,13 @@ module Subito
     # @yieldparam [ShowFeature] obj self
     def parse_show(video_filename)
       verbose = Verbose.instance
-      @name = video_filename[PATTERN, 1].nil? ? nil : video_filename[PATTERN, 1].downcase.tr_s('.',' ')
-      @season = video_filename[PATTERN,2].nil? ? nil : "%02d" % video_filename[PATTERN,2][/(\d+).?(\d{2}$)/,1].to_i
-      @episode = video_filename[PATTERN,2].nil? ? nil : "%02d" % video_filename[PATTERN,2][/(\d+).?(\d{2}$)/,2].to_i
-      @team = video_filename[PATTERN,3].nil? ? nil : video_filename[PATTERN,3].downcase
+      proc = Proc.new do |position, proc|
+        video_filename[PATTERN,position].nil? ? nil : proc.call(video_filename[PATTERN,position])
+      end
+      @name = proc.call(1, lambda{|x| x.downcase.tr_s('.',' ')})
+      @season = proc.call(2, lambda{|x| "%02d" % x[/(\d+).?(\d{2}$)/,1].to_i})
+      @episode = proc.call(2, lambda{|x| "%02d" % x[/(\d+).?(\d{2}$)/,2].to_i})
+      @team = proc.call(3, lambda{|x| x.downcase})
       if block_given?
         yield(self)
         retrieve_id(@name)
