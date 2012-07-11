@@ -53,6 +53,11 @@ module Subito
       unless name.nil? 
         Verbose.instance.msg "Getting id for #{name}", :debug
         @id = Database.instance.get(name) 
+        if @id.nil?
+          sim = Database.instance.get_shows_similar_to name,0.89
+          Verbose.instance.msg "#{name} is not in database,\
+ maybe you meant a show in the following list :#{sim.keys}" unless sim.empty?
+        end
       end
     end
     
