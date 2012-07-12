@@ -5,6 +5,7 @@ Subito is a utility application easing tv show subtitles download.
 * Ruby >1.9
 * Mechanize
 * fuzzy-string-match_pure
+* SQLite3 (optional)
 
 and:
 
@@ -12,9 +13,10 @@ and:
 * Fakeweb
  to run tests.
 
-To install dependencies, in the application directory root, run :
+To install dependencies, run in the application directory root:
 
-    $ bundle install
+    $ bundle install --without test
+
 
 On Windows, you may need to install _Development-Kit_ and follow the [installation instructions](https://github.com/oneclick/rubyinstaller/wiki/Development-Kit) along with [RubyInstaller](http://rubyinstaller.org/downloads/)
 

@@ -27,6 +27,7 @@ GEM
     nokogiri (1.5.5)
     nokogiri (1.5.5-java)
     ntlm-http (0.1.1)
+    sqlite3 (1.3.6)
     test-unit (2.5.0)
     unf (0.0.5)
       unf_ext
@@ -45,4 +46,5 @@ DEPENDENCIES
   fuzzy-string-match (~> 0.9.3)
   fuzzy-string-match_pure (~> 0.9.3)
   mechanize (~> 2.5.1)
+  sqlite3
   test-unit
