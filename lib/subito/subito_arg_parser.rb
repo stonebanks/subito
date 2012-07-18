@@ -55,7 +55,7 @@ module Subito
         opts.on("-w","--directory DIR","Run in directory DIR") do |dir| 
           options[:working_directory] = dir
         end
-        opts.on("-n","--name PATTERN","Run for all show matching the pattern PATTERN") do |raw_name| 
+        opts.on("-n","--name \"PATTERN\"", "Run for all show matching the pattern PATTERN") do |raw_name| 
           options[:name] = raw_name
         end
         opts.on("--[no-]renaming", "Rename the subtitle file as the raw name (default)") do |t| 
