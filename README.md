@@ -24,7 +24,6 @@ On Windows, you may need to install _Development-Kit_ and follow the [installati
 You can find help by launching 
 
     $ cd path/to/subito/directory/bin
-
     $ ./subito --help
 
 or
