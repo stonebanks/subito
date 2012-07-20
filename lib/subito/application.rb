@@ -33,7 +33,6 @@ module Subito
       Dir.chdir(options[:working_directory]) do 
         verbose.msg("Considering only files following pattern #{options[:name]}", :info)
         # Run on all shows matching pattern
-        p Dir.glob(options[:name])
         Dir.glob(options[:name]).each do |show|
           verbose.msg("Computing show : #{show}")
           basename = show[/^(.*\.)[\d\w]{3}$/i,1]
