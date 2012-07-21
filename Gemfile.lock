@@ -46,5 +46,6 @@ DEPENDENCIES
   fuzzy-string-match (~> 0.9.3)
   fuzzy-string-match_pure (~> 0.9.3)
   mechanize (~> 2.5.1)
+  mime-types
   sqlite3
   test-unit

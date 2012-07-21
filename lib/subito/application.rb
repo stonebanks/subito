@@ -15,6 +15,7 @@
 
 $:.unshift File.join(File.dirname(__FILE__), '..')
 require 'subito'
+require 'mime/types'
 
 module Subito
   class Application
@@ -34,15 +35,17 @@ module Subito
         verbose.msg("Considering only files following pattern #{options[:name]}", :info)
         # Run on all shows matching pattern
         Dir.glob(options[:name]).each do |show|
-          verbose.msg("Computing show : #{show}")
-          basename = show[/^(.*\.)[\d\w]{3}$/i,1]
-          unless (File.exists? basename+"srt")
-            s = parse_show show, options
-            page = search_subtitles_page(s)
-            subtitles_urls = SubtitlesUrlsGetter.new(page).run
-            download s, show, subtitles_urls, options
-          else
-            verbose.msg "#{basename+ "srt"} already exists.", :default, head:"[AT EASE] ".green
+          if MIME::Types.of(show).any? do |x| x.to_s =~/^video/ end
+            verbose.msg("Computing show : #{show}")
+            basename = show[/^(.*\.)[\d\w]{3}$/i,1]
+            unless (File.exists? basename+"srt")
+              s = parse_show show, options
+              page = search_subtitles_page(s)
+              subtitles_urls = SubtitlesUrlsGetter.new(page).run
+              download s, show, subtitles_urls, options
+            else
+              verbose.msg "#{basename+ "srt"} already exists.", :default, head:"[AT EASE] ".green
+            end
           end
         end
       end
