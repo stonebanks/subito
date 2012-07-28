@@ -42,7 +42,7 @@ module Subito
       @team = proc.call(3, lambda{|x| x.downcase})
       if block_given?
         yield(self)
-        retrieve_id(@name)
+        retrieve_id
       end
       verbose.msg("#{self.to_s}", :debug)
     end
@@ -51,7 +51,7 @@ module Subito
     #
     # @param [String] name the name of the tv show
     # @return [String] the corresponding id
-    def retrieve_id(name)
+    def retrieve_id(name = self.name)
       nil
       unless name.nil? 
         Verbose.instance.msg "Getting id for #{name}", :debug
