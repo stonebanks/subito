@@ -14,7 +14,7 @@
 # along with Subito.  If not, see <http://www.gnu.org/licenses/>.
 require 'colored'
 module Subito
-  VERSION = "0.3.0"
+  VERSION = "0.3.1"
   ROOT = File.expand_path(File.dirname(__FILE__))
   Dir.glob(File.join(ROOT, "subito",'*.rb')).reject{|i| i=~/_database/}.
     each  do |file|
