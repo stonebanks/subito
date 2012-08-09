@@ -41,7 +41,7 @@ module Subito
             unless (File.exists? basename+"srt")
               s = parse_show show, options
               page = search_subtitles_page(s)
-              subtitles_urls = SubtitlesUrlsGetter.new(page).run
+              subtitles_urls = Scraper.new(page).run
               download s, show, subtitles_urls, options
             else
               verbose.msg "#{basename+ "srt"} already exists.", :default, head:"[AT EASE] ".green
