@@ -22,7 +22,7 @@ module Subito
   # This class provides methods for parsing the subtitles page
   #
   # @since 0.2.0
-  class SubtitlesUrlsGetter
+  class Scraper
     attr_reader :hash_urls, :page
     # Constructor
     #

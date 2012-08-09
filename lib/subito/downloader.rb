@@ -29,7 +29,7 @@ module Subito
       @hash = hash_urls
     end
     
-    # Search in a hash of subtitles (see SubtitlesUrlsGetter#run) the right urls given the language and team
+    # Search in a hash of subtitles (see Scrapper#run) the right urls given the language and team
     #
     # @param [Hash] args 
     # @option args [String] :language The language the user want the subtitles to be in
