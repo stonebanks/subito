@@ -3,13 +3,13 @@ $:.unshift File.join(File.dirname(__FILE__), '..', 'lib')
 
 require 'test/unit'
 require 'flexmock/test_unit'
-require 'subito/subtitles_urls_getter'
+require 'subito/scraper'
 require 'fakeweb'
 require 'mechanize'
 
 include Subito
 
-class TestSubtitlesUrlsGetter < Test::Unit::TestCase
+class TestScraper < Test::Unit::TestCase
 
   def setup
     page= <<-EOF
@@ -137,7 +137,7 @@ class TestSubtitlesUrlsGetter < Test::Unit::TestCase
     EOF
     FakeWeb.register_uri(:get, "http://www.foo.com", :body => page, :content_type =>"text/html" )
     flexmock(Verbose).new_instances(:instance).should_receive(:msg).with_any_args.and_return(nil)
-    @subs = SubtitlesUrlsGetter.new Mechanize.new.get("http://www.foo.com")
+    @subs = Scraper.new Mechanize.new.get("http://www.foo.com")
   end
   
   def test_must_return_an_hash_formatted_with_version_language_and_urls
