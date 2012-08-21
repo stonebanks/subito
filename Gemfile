@@ -1,4 +1,5 @@
-source :rubygems
+source 'http://rubygems.org/'
+#source :rubygems
 
 #ruby "1.9.2"
 

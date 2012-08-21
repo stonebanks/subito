@@ -42,7 +42,7 @@ module Subito
     def find_id(name)
       if self.dictionnary.empty? 
         Verbose.instance.msg "Loading Database...", :debug
-        self.dictionnary = YAML.load_file absolute_filename
+        self.dictionnary = YAML.load_file self.filename
       end
       id = self.dictionnary[name]
       Verbose.instance.msg("#{name} isn't in database. You may need to update database by running the application with -d option", :debug) if id.nil?
