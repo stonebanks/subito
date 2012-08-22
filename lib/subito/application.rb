@@ -15,7 +15,7 @@
 
 $:.unshift File.join(File.dirname(__FILE__), '..')
 require 'subito'
-require 'mime/types'
+#require 'mime/types'
 
 module Subito
   class Application

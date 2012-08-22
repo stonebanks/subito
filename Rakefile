@@ -1,4 +1,5 @@
 require 'rake/testtask'
+#require "bundler/setup"
 
 task :default => [:test]
 

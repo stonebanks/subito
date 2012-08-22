@@ -14,7 +14,7 @@
 # along with Subito.  If not, see <http://www.gnu.org/licenses/>.
 
 $:.unshift File.join(File.dirname(__FILE__), '..')
-require 'mechanize'
+
 require 'subito'
 
 module Subito

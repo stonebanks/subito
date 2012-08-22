@@ -14,7 +14,6 @@
 # along with Subito.  If not, see <http://www.gnu.org/licenses/>.
 
 $:.unshift File.join(File.dirname(__FILE__), '..')
-require 'sqlite3'
 
 module Subito
 
@@ -34,14 +33,10 @@ module Subito
       @db = SQLite3::Database.new @filename
       @db.default_synchronous='off'
       # Create a database
-      @db.execute "create table if not exists showsid (name varchar(255),id int );"
+      @db.execute "create table if not exists showsid (name text,id integer );"
       dic = args.collect{|v| proc.call(v)}.flatten
       dic.each_slice(400) do |args|
-        dictionnary = Hash[*args]
-        @db.execute("insert into showsid (name, id) values"+
-                    dictionnary.reduce("") do |mem,obj| 
-                      mem+"(\""+obj*"\","+")," 
-                    end.chop)
+        @db.execute("insert into showsid (name, id) values "+ (['(?,?)']*200).join(', '), *args)
       end
     end
     

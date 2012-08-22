@@ -15,8 +15,6 @@
 
 $:.unshift File.join(File.dirname(__FILE__), '..')
 
-require 'yaml'
-
 module Subito
   # Yaml based Adaptee class
   #
