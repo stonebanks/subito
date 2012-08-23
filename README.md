@@ -15,7 +15,11 @@ and:
 
 To install dependencies, run in the application directory root:
 
-    $ bundle install --without test
+    $ bundle install --without test # if you want to use sqlite
+
+or 
+
+    $ bundle install --without test extra # otherwise
 
 
 On Windows, you may need to install _Development-Kit_ and follow the [installation instructions](https://github.com/oneclick/rubyinstaller/wiki/Development-Kit) along with [RubyInstaller](http://rubyinstaller.org/downloads/)

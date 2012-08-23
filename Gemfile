@@ -8,7 +8,7 @@ gem "fuzzy-string-match", "~>0.9.3"
 gem "fuzzy-string-match_pure", "~>0.9.3"
 gem "colored"
 gem "mime-types"
-gem "sqlite3"
+gem "sqlite3", :group => :extra
 
 group :test do
 gem "fakeweb", "~>1.3.0"
