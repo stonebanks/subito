@@ -36,7 +36,8 @@ module Subito
       @db.execute "create table if not exists showsid (name text,id integer );"
       dic = args.collect{|v| proc.call(v)}.flatten
       dic.each_slice(400) do |args|
-        @db.execute("insert into showsid (name, id) values "+ (['(?,?)']*200).join(', '), *args)
+        number_of_pair_of_element = args.length>>1
+        @db.execute("insert into showsid (name, id) values "+ (['(?,?)']*number_of_pair_of_element).join(', '), *args)
       end
     end
     
