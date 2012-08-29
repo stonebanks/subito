@@ -59,7 +59,7 @@ module Subito
     def get(name)
       Dir.chdir Dir.home do
         unless File.exists? @db.filename
-          Verbose.instance.msg "#{filename} does not exist, It needed to be created", :debug
+          Verbose.instance.msg "#{@db.filename} does not exist, It needed to be created", :debug
           write
         end
         @db.find_id(name)

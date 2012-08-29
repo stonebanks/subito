@@ -2,9 +2,10 @@
 $:.unshift File.join(File.dirname(__FILE__), '..' , 'lib')      
 
 require "bundler/setup"
+#Bundler.require(:default)
 require 'subito/subito_arg_parser'
 require 'subito/application'
 
-opt = Subito::SubitoArgParser.parse(ARGV)
-Subito::Application.run(opt)
+include Subito
+Application.run SubitoArgParser.parse(ARGV)
 
