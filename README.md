@@ -5,7 +5,7 @@ Subito is a utility application easing tv show subtitles download.
 * Ruby >1.9
 * Mechanize
 * fuzzy-string-match_pure
-* SQLite3 (optional)
+* SQLite3 (optional : SQLite3 depends on _libsqlite3-dev_ , **the version of _libsqlite3-dev_ has to be 3.7.11 or greater**)
 
 and:
 
