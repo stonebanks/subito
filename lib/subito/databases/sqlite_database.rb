@@ -37,7 +37,7 @@ module Subito
       dic = args.collect{|v| proc.call(v)}.flatten
       dic.each_slice(400) do |args|
         number_of_pair_of_element = args.length>>1
-        @db.execute("insert into showsid (name, id) values "+ (['(?,?)']*number_of_pair_of_element).join(', '), *args)
+        @db.execute("insert into showsid select ? as name, ? as id "+" union select ?,? "*(number_of_pair_of_element - 1), *args)
       end
     end
     
