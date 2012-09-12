@@ -24,6 +24,8 @@ or
 
 On Windows, you may need to install _Development-Kit_ and follow the [installation instructions](https://github.com/oneclick/rubyinstaller/wiki/Development-Kit) along with [RubyInstaller](http://rubyinstaller.org/downloads/)
 
+__Note:__ Colors in terminal is not available on windows
+
 ### Usage ###
 You can find help by launching 
 
