@@ -35,23 +35,13 @@ class ShowFeatureTest < Test::Unit::TestCase
     assert_equal @team, @showfeature.team
   end
 
-  def test_dyn_replace_must_change_the_value_of_the_given_attribute
-    @showfeature.dyn_replace :name=, "something_that_is_not_a_random_generated_stuff"
-    assert_equal "something_that_is_not_a_random_generated_stuff", @showfeature.name
-  end
-
   def test_retrieve_id_must_return_nil_if_name_nil
     assert_nil @showfeature.retrieve_id nil
   end
 
-  def test_id_must_be_set_if_block_given
-    showfeature = ShowFeature.new
-    assert_block do 
-      showfeature.parse_show(@show) do |s|
-        showfeature.dyn_replace :name=, "something_that_is_not_a_random_generated_stuff"
-      end 
-      showfeature.id == "42"
-    end
+  def test_id_must_be_42_when_retrieve_id_is_called
+    @showfeature.retrieve_id
+    assert_equal "42", @showfeature.id 
   end
 
   def test_all_attrs_should_return_nil

@@ -34,7 +34,7 @@ module Subito
         :working_directory => ".", 
         :name => "*.{avi,mp4,mkv}", 
         :to_rename => true,
-        :as_if =>{},
+        :as_if =>nil,
         :v => false
       }
 
@@ -61,9 +61,8 @@ module Subito
         opts.on("--[no-]renaming", "Rename the subtitle file as the raw name (default)") do |t| 
           options[:to_rename] = t
         end
-        opts.on("--replace oldname,newname", Array, "Run the application considering the name 'oldname' of the show is now 'newname'. If there is any whitespace in oldname and/or newname, surround with quotation marks  ") do |array|
-          array[1] ||= array[0]
-          options[:as_if] = {array[0] => array[1]}
+        opts.on("--replace ^old,new", "Run the application replacing string 'old' by 'new' in the raw name of the video file") do |string|
+          options[:as_if] = string if (string =~ /^\^.*,.*/)
         end
         opts.separator ""
         opts.on("-v","--verbose", "if enabled, display more accurate information") do |v|

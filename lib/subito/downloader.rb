@@ -62,7 +62,7 @@ module Subito
           verbose.msg "#{filename} : Download completed", :default, head:"[SUCCEED] ".green
         else
           verbose.msg " #{filename} Subtitle can't be downloaded, this may be due to the reaching of \
-maximal amount of files downloadable per day on #{SConfig.instance.ressources_subsite_name}", :default, head:" [FAILED] "
+maximal amount of files downloadable per day on #{SConfig.instance.ressources_subsite_name}", :default, head:" [FAILED] ".red
         end
       end unless url.nil?
     end

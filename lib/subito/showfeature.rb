@@ -36,14 +36,13 @@ module Subito
       proc = Proc.new do |position, proc|
         video_filename[PATTERN,position].nil? ? nil : proc.call(video_filename[PATTERN,position])
       end
+
+      yield(self, video_filename) if block_given?
       @name = proc.call(1, lambda{|x| x.downcase.tr_s('.',' ')})
       @season = proc.call(2, lambda{|x| "%02d" % x[/(\d+).?(\d{2}$)/,1].to_i})
       @episode = proc.call(2, lambda{|x| "%02d" % x[/(\d+).?(\d{2}$)/,2].to_i})
       @team = proc.call(3, lambda{|x| x.downcase})
-      if block_given?
-        yield(self)
-        retrieve_id
-      end
+      retrieve_id
       verbose.msg("#{self.to_s}", :debug)
     end
 
@@ -68,9 +67,9 @@ module Subito
     #
     # @param [Symbol] sym the setter of the attribute
     # @param [String] value new value
-    def dyn_replace(sym,value)
-      self.send(sym,value.downcase)
-    end
+#    def dyn_replace(show,string)
+ #    show.gsub!(string[/^\^(.*),.*/,1], string[/^\^.*,(.*)$/,1])
+  #  end
 
     # Overloaded to_s method
     def to_s

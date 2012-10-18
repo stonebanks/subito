@@ -56,9 +56,12 @@ module Subito
     def self.parse_show show, options
       s = ShowFeature.new
       s.parse_show(show) do |s| 
-        unless options[:as_if][s.name].nil?
-          Verbose.instance.msg("Replacing #{s.name} by #{options[:as_if][s.name]}", :info)
-          s.dyn_replace(:name=, options[:as_if][s.name])
+        if  options[:as_if]
+          string = options[:as_if]
+          pattern= string[/^\^(.*),.*/,1]
+          replacement = string[/^\^.*,(.*)$/,1]
+          Verbose.instance.msg("Replacing  #{pattern} by #{replacement}", :info)
+          show.gsub!(pattern, replacement)
         end
       end
       s
