@@ -23,9 +23,13 @@ module Subito
   # @since 0.2.0
   class ShowFeature
     #attr_accessor
-    attr_accessor :id, :name, :team, :episode, :season
+    attr_accessor :id, :name, :team, :episode, :season, :raw_name
     PATTERN = /(^[\w\.\(\)]+)\.(\d{3}|s?\d{1,2}[ex]?\d{2})\..*-(.*)\.[\d\w]{3}$/i
  
+  
+    def initialize(str = "")
+      self.raw_name = str
+    end
     # Parse the video filename to find the features
     #
     # @param [String] video_filename the video filename
